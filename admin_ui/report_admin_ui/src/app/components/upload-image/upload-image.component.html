@@ -1,0 +1,8 @@
+<div class="mb-6">
+    <small class="text-danger">File should not be greater then {{size}} Kb</small>
+    <input type="file" class="form-control" id="basic-default-upload-file" [attr.accept]="accept"
+        (change)="onFileSelected($event)">
+</div>
+<div class="mb-6 text-center" *ngIf="showPreview">
+    <img [src]="imagePreview" class="image-preview">
+</div>

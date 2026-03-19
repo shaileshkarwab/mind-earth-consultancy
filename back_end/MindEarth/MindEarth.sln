@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MindEarth.Web", "MindEarth.Web\MindEarth.Web.csproj", "{BB5530DA-B60F-467C-9726-050A59AF175B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MindEarth.Database", "MindEarth.Database\MindEarth.Database.csproj", "{95C84117-32CB-47DF-A29C-4350A2ADC190}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB5530DA-B60F-467C-9726-050A59AF175B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB5530DA-B60F-467C-9726-050A59AF175B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB5530DA-B60F-467C-9726-050A59AF175B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB5530DA-B60F-467C-9726-050A59AF175B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C84117-32CB-47DF-A29C-4350A2ADC190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95C84117-32CB-47DF-A29C-4350A2ADC190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95C84117-32CB-47DF-A29C-4350A2ADC190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95C84117-32CB-47DF-A29C-4350A2ADC190}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7BA6B98E-F54B-4754-AC2E-E52C856435B9}
+	EndGlobalSection
+EndGlobal

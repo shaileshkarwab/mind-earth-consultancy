@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* Fix ng-bootstrap datepicker header in Sneat */
+
+.ngb-dp-navigation-select {
+  display: flex !important;
+  gap: 4px;
+}
+
+.ngb-dp-navigation-select select {
+  display: inline-block !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 2px 6px !important;
+}
+
+.ngb-dp-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ngb-dp-navigation {
+  align-items: center;
+}

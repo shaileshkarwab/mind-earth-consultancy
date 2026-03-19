@@ -1,0 +1,7 @@
+/admin_ui/report_admin_ui/node_modules
+/admin_ui/report_admin_ui/.angular
+/admin_ui/report_admin_ui/.vscode
+/back_end/MindEarth/.vs
+/back_end/MindEarth/MindEarth.Database/bin/Debug/net8.0
+/back_end/MindEarth/MindEarth.Web/bin/Debug/net8.0
+/back_end/MindEarth/MindEarth.Database/obj

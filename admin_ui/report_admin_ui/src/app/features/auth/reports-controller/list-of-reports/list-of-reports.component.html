@@ -1,0 +1,45 @@
+<div class="card-body mb-6">
+    <app-tool-bar [buttons]="buttons" (clickEvent)="clickCommand($event);"></app-tool-bar>
+</div>
+<div class="card mb-6">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-12">
+                <h5>List Of Reports</h5>
+            </div>
+        </div>
+
+        <div class="row mt-6">
+            <div class="col-12">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Category</th>
+                            <th>Excel File</th>
+                            <th>Report URL</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let report of listOfReports$|async let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{report.category}}</td>
+                            <td>{{report.reportName}}</td>
+                            <td>{{report.reportURLLink}}</td>
+                            <td>
+                                <button (click)="editCommand(report.reportId!)"  type="button" class="btn btn-sm btn-primary me-2">
+                                    <i class={{boxIcons.EDIT}}></i>
+                                </button>
+                                <button (click)="deleteCommand(report.reportId!)" type="button" class="btn btn-sm btn-danger me-2">
+                                    <i class={{boxIcons.DELETE}}></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

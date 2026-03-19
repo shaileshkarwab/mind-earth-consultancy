@@ -1,0 +1,83 @@
+<div class="offcanvas-header">
+    <h5 class="offcanvas-title">Manage Case Study & White Papers</h5>
+    <button type="button" class="btn-close text-reset" aria-label="Close"
+        (click)="activeOffcanvas.dismiss('Cross click')"></button>
+</div>
+<form [formGroup]="caseStudyWhitePaperForm" (ngSubmit)="submitForm();">
+    <section style="height: 80vh; overflow-y: auto; ">
+        <div class="offcanvas-body">
+            <div class="row">
+                <div class="col-12">
+                    <app-label>Date</app-label>
+                    <app-date-picker formControlName="caseWpDate"></app-date-picker>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <app-label>Case Study/White Paper</app-label>
+                    <div class="col-md">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="inlineRadio1" value="1"
+                                formControlName="entityType">
+                            <label class="form-check-label" for="inlineRadio1">Case Study</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="inlineRadio2" value="2"
+                                formControlName="entityType">
+                            <label class="form-check-label" for="inlineRadio2">White Paper</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <app-label>Title</app-label>
+                    <textarea rows="5" class="form-control form-control-sm" placeholder="Enter title"
+                        formControlName="title">
+                </textarea>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <app-label>Content</app-label>
+                    <textarea rows="10" class="form-control form-control-sm" placeholder="Enter content"
+                        formControlName="content">
+                </textarea>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <label>Web Image</label>
+                    <app-upload-image [size]="200" [accept]="'image/*'"
+                        (fileSelectedEvent)="selectedWebImageCommand($event);" formControlName="imagePath" ></app-upload-image>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <label>Upload Pdf</label>
+                    <app-upload-image [size]="1000" [showPreview]="false" [accept]="'application/pdf'"
+                        (fileSelectedEvent)="selectedPDFCommand($event)" ;></app-upload-image>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="offcanvas-footer">
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary me-2">
+                <i class={{boxIcons.SAVE}}></i>
+            </button>
+            <button type="button" class="btn btn-danger me-2" (click)="activeOffcanvas.close('Close click')">
+                <i class={{boxIcons.CLOSE}}></i>
+            </button>
+        </div>
+    </div>
+</form>

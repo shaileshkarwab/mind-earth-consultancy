@@ -1,0 +1,101 @@
+<div *ngIf="userForm">
+
+
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Manage User</h5>
+        <button type="button" class="btn-close text-reset" aria-label="Close"
+            (click)="activeOffcanvas.dismiss('Cross click')"></button>
+    </div>
+    <form [formGroup]="userForm!" (ngSubmit)="onSubmit()">
+        <div class="offcanvas-body" style="height: 80vh;">
+            <div class="row mb-2">
+                <div class="col-12">
+                    <div class="form-group">
+                        <app-label>First Name</app-label>
+                        <input type="text" class="form form-control form-control-sm" formControlName="firstName">
+                    </div>
+                    <app-error-handler [control]="userForm.get('firstName')" fieldName="First Name"></app-error-handler>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                    <div class="form-group">
+                        <app-label>Last Name</app-label>
+                        <input type="text" class="form form-control form-control-sm" formControlName="lastName">
+                    </div>
+                    <app-error-handler [control]="userForm.get('lastName')" fieldName="Last Name"></app-error-handler>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                    <div class="form-group">
+                        <app-label>Email</app-label>
+                        <input type="text" class="form form-control form-control-sm" formControlName="email" autocomplete="new-email" >
+                        <app-error-handler [control]="userForm.get('email')" fieldName="Email"></app-error-handler>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                    <div class="form-group">
+                        <app-label>Role</app-label>
+                        <select class="form form-control form-control-sm form-select" formControlName="roleId">
+                            <option value="">-- Select Role --</option>
+                            <option *ngFor="let role of activeRoles$ | async" [value]="role.rowId">
+                                {{ role.value }}
+                            </option>
+                        </select>
+                        <app-error-handler [control]="userForm.get('role')" fieldName="Role"></app-error-handler>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row mb-2">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Upload Photo</label>
+                        <app-upload-image [accept]="'image/*'" [size]="20"
+                            formControlName="userImage"></app-upload-image>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2" *ngIf="hidePassword">
+                <div class="col-12">
+                    <div class="form-group">
+                        <app-label>Password</app-label>
+                        <input type="password" class="form form-control form-control-sm" formControlName="password">
+                        <app-error-handler [control]="userForm.get('password')" fieldName="password"
+                            customMessage="Password must contain at least 8 characters with uppercase, lowercase, number and special character"></app-error-handler>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mb-2" *ngIf="hidePassword">
+                <div class="col-12">
+                    <div class="form-group">
+                        <app-label>Confirm Password</app-label>
+                        <input type="password" class="form form-control form-control-sm"
+                            formControlName="confirmPassWord">
+                    </div>
+                    <app-error-handler [control]="userForm.get('confirmPassWord')" fieldName="Confirm PassWord"
+                        customMessage="Password must contain at least 8 characters with uppercase, lowercase, number and special character"></app-error-handler>
+                </div>
+            </div>
+
+        </div>
+        <div class="offcanvas-footer">
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary m-2">
+                    <i class="{{boxIcon.SAVE}}"></i>
+                </button>
+                <button type="button" class="btn btn-secondary m-2" (click)="activeOffcanvas.close('Close click')">
+                    <i class="{{boxIcon.CLOSE}}"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

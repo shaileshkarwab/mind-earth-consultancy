@@ -1,0 +1,32 @@
+<form [formGroup]="loginForm" (submit)="onSubmit();">
+    <div class="mb-6">
+        <label for="email" class="form-label">Email or Username</label>
+        <input type="text" class="form-control" id="email" name="email-username"
+            placeholder="Enter your email or username" autofocus formControlName="userName" />
+        <app-error-handler [control]="loginForm.get('userName')" fieldName="Email"></app-error-handler>
+    </div>
+    <div class="mb-6 form-password-toggle">
+        <label class="form-label" for="password">Password</label>
+        <div class="input-group input-group-merge">
+            <input type="password" id="password" class="form-control" name="password"
+                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                aria-describedby="password" formControlName="passWord" />
+            <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
+        </div>
+        <app-error-handler [control]="loginForm.get('passWord')" fieldName="Password" customMessage="Password must contain at least 8 characters with uppercase, lowercase, number and special character"></app-error-handler>
+    </div>
+    <div class="mb-8">
+        <div class="d-flex justify-content-between">
+            <div class="form-check mb-0">
+                <input class="form-check-input" type="checkbox" id="remember-me" />
+                <label class="form-check-label" for="remember-me"> Remember Me </label>
+            </div>
+            <a [routerLink]="['forgot-password']">
+                <span>Forgot Password?</span>
+            </a>
+        </div>
+    </div>
+    <div class="mb-6">
+        <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
+    </div>
+</form>

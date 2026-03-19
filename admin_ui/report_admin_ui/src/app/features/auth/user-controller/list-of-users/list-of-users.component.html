@@ -1,0 +1,13 @@
+<div class="card-body mb-6">
+    <app-tool-bar [buttons]="buttons" (clickEvent)="clickCommand($event);"></app-tool-bar>
+</div>
+<div class="card mb-6">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-3" *ngFor="let u of users$ | async">
+                <app-user-list-card [user]="u" (edit)="editCommand($event);"  (delete)="deleteCommand($event);" ></app-user-list-card>
+            </div>
+        </div>
+    </div>
+</div>

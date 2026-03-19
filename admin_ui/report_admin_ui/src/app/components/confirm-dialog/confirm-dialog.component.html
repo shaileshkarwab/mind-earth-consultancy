@@ -1,0 +1,10 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ options!.title}}</h4>
+</div>
+<div class="modal-body">
+    <p>{{ options!.message }}</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="yes()">{{ options!.confirmButtonText }}</button>
+    <button type="button" class="btn btn-secondary" (click)="no()">{{ options!.cancelButtonText }}</button>
+</div>

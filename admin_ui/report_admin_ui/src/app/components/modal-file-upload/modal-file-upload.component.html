@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title">Hi there!</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <app-upload-image [size]="300" [accept]="'image/*'" (fileSelectedEvent)="selectFileCommand($event);" ></app-upload-image>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="uploadFileCommand()">
+        <i class="{{boxIcons.SAVE}}" ></i>
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">
+        <i class="{{boxIcons.CLOSE}}" ></i>
+    </button>
+</div>

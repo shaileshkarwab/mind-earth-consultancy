@@ -1,0 +1,21 @@
+<div class="table-responsive text-nowrap">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{ col.header }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of data">
+                <td *ngFor="let col of columns">
+                    {{ row}}
+                    <pre>{{row|json}}</pre>
+                </td>
+            </tr>
+        </tbody>
+
+
+    </table>
+</div>

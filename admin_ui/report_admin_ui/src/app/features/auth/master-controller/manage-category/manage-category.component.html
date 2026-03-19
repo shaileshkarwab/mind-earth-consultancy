@@ -1,0 +1,115 @@
+<div class="offcanvas-header">
+    <h4 class="offcanvas-title">Offcanvas title</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+</div>
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <div class="offcanvas-body">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label class="text-danger">Category Name</label>
+                    <input type="text" class="form form-control form-control-sm" formControlName="name">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label class="text-danger">Sequence #</label>
+                    <input type="text" class="form form-control form-control-sm" formControlName="seqNo">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label class="text-danger">&nbsp;</label>
+                    <section>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
+                                formControlName="isActive">
+                            <label class="form-check-label text-danger" for="inlineCheckbox3">
+                                {{ !categoryForm.get('isActive')?.value ? 'Block' : 'Active' }}
+                            </label>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-12">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-10">
+                                <h5 class="card-title">Sub Categories</h5>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-sm btn-primary" (click)="addCommand();">
+                                    <i class="bx bx-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="max-height: 40vh; overflow-y: auto;">
+                        <div formArrayName="subCategories">
+                            <div *ngFor="let row of subCategories.controls; let i = index" [formGroupName]="i">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group text-danger">
+                                            <label>Sub Category</label>
+                                            <input type="text" formControlName="name"
+                                                class="form form-control form-control-sm">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group text-danger">
+                                            <label>Sequence</label>
+                                            <input type="text" formControlName="seqNo"
+                                                class="form form-control form-control-sm">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label>&nbsp;</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
+                                                formControlName="isActive">
+                                            <label class="form-check-label text-danger" for="inlineCheckbox3">
+                                                {{ !row.get('isActive')?.value ? 'Block' : 'Active' }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 mt-4">
+                                        <button type="button" class="btn btn-sm btn-danger" (click)="deleteSubCategoryCommand(i);">
+                                            <i class="bx bx-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="offcanvas-footer">
+        <div class="text-end m-2">
+            <button type="submit" class="btn btn-primary m-2">
+                <i class="bx bx-save"></i>
+            </button>
+            <button type="button" class="btn btn-outline-secondary" (click)="offcanvas.close('Close click')">
+                <i class="bx bx-x"></i>
+            </button>
+        </div>
+    </div>
+</form>

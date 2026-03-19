@@ -1,0 +1,611 @@
+[
+  {
+    "ContainingType": "MindEarth.Web.Controllers.AdminMenuController",
+    "Method": "GetAdminMenu",
+    "RelativePath": "api/AdminMenu",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.AuthenticationController",
+    "Method": "AuthenticateUser",
+    "RelativePath": "api/authenticate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginRequest",
+        "Type": "MindEarth.Web.Features.Auth.Commands.LoginRequestCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MindEarth.Web.Features.Auth.DTO.LoginResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 401
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      }
+    ]
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.AuthenticationController",
+    "Method": "LogOut",
+    "RelativePath": "api/authenticate/{refreshToken}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "refreshToken",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.CaseStudyWhitePaperController",
+    "Method": "SaveCaseStudyWhitePaper",
+    "RelativePath": "api/CaseStudyWhitePaper",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "manageCaseStudyWhitePaper",
+        "Type": "MindEarth.Web.Features.CaseStudyAndWhitePappers.DTO.DTO_ManageCaseStudyWhitePaper",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.CaseStudyWhitePaperController",
+    "Method": "ReteriveCaseStudyWhitePaper",
+    "RelativePath": "api/CaseStudyWhitePaper/{rowId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rowId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.CaseStudyWhitePaperController",
+    "Method": "UpdateCaseStudyWhitePaper",
+    "RelativePath": "api/CaseStudyWhitePaper/{rowId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rowId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "manageCaseStudyWhitePaper",
+        "Type": "MindEarth.Web.Features.CaseStudyAndWhitePappers.DTO.DTO_ManageCaseStudyWhitePaper",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.CaseStudyWhitePaperController",
+    "Method": "DeleteCaseStudyWhitePaper",
+    "RelativePath": "api/CaseStudyWhitePaper/{rowId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rowId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.CaseStudyWhitePaperController",
+    "Method": "ListCaseStudyWhitePaper",
+    "RelativePath": "api/CaseStudyWhitePaper/list",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filter",
+        "Type": "MindEarth.Web.Common.Models.Filter",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.CategoryController",
+    "Method": "CreateCategory",
+    "RelativePath": "api/Category",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "saveEntity",
+        "Type": "MindEarth.Web.Features.CategorySubcategory.Command.CreateCategory.DTO_CreateCategory",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.CategoryController",
+    "Method": "SearchCategory",
+    "RelativePath": "api/Category/{categoryID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.CategoryController",
+    "Method": "DeleteCategory",
+    "RelativePath": "api/Category/{categoryID}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.CategoryController",
+    "Method": "UpdateCategory",
+    "RelativePath": "api/Category/{categoryID}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "saveEntity",
+        "Type": "MindEarth.Web.Features.CategorySubcategory.Command.CreateCategory.DTO_CreateCategory",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.CategoryController",
+    "Method": "SearchCategory",
+    "RelativePath": "api/Category/list",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filter",
+        "Type": "MindEarth.Web.Common.Models.Filter",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.CategoryController",
+    "Method": "ListSubCategories",
+    "RelativePath": "api/Category/list-sub-category",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.CategoryController",
+    "Method": "DeleteSubCategory",
+    "RelativePath": "api/Category/sub-category/{subCategoryID}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "subCategoryID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.FileUploadController",
+    "Method": "Upload",
+    "RelativePath": "api/FileUpload/{uploadFolder}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "uploadFolder",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "ContentType",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ContentDisposition",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Headers",
+        "Type": "Microsoft.AspNetCore.Http.IHeaderDictionary",
+        "IsRequired": false
+      },
+      {
+        "Name": "Length",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FileName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.ReportController",
+    "Method": "SaveReportFile",
+    "RelativePath": "api/Report",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "report",
+        "Type": "MindEarth.Web.Features.Reports.DTO.DTO_Report",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.ReportController",
+    "Method": "UpdateReportFile",
+    "RelativePath": "api/Report/{reportId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "reportId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "report",
+        "Type": "MindEarth.Web.Features.Reports.DTO.DTO_Report",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.ReportController",
+    "Method": "DeleteReportFile",
+    "RelativePath": "api/Report/{reportID}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "reportID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.ReportController",
+    "Method": "SaveReportImage",
+    "RelativePath": "api/Report/Image/{imageRowId}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "imageRowId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "reportImage",
+        "Type": "MindEarth.Web.Features.Reports.DTO.DTO_ReportImage",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.ReportController",
+    "Method": "DeleteReportImage",
+    "RelativePath": "api/Report/Image/{reportImageID}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "reportImageID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.ReportController",
+    "Method": "List",
+    "RelativePath": "api/Report/list",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "reportFilter",
+        "Type": "MindEarth.Web.Common.Models.Filter",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.ReportController",
+    "Method": "List",
+    "RelativePath": "api/Report/reterive/{reportID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "reportID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.RolesController",
+    "Method": "Get",
+    "RelativePath": "api/Roles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "active",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.RolesController",
+    "Method": "Save",
+    "RelativePath": "api/Roles",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createRole",
+        "Type": "MindEarth.Web.Features.Roles.DTO.DTO_Role",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.RolesController",
+    "Method": "Reterive",
+    "RelativePath": "api/Roles/{roleId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.RolesController",
+    "Method": "Delete",
+    "RelativePath": "api/Roles/{roleId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.RolesController",
+    "Method": "List",
+    "RelativePath": "api/Roles/list",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filter",
+        "Type": "MindEarth.Web.Common.Models.Filter",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.RolesController",
+    "Method": "GetAllMenuAndMenuDetails",
+    "RelativePath": "api/Roles/menus",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.UserController",
+    "Method": "CreateUser",
+    "RelativePath": "api/User",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "manageUser",
+        "Type": "MindEarth.Web.Features.User.DTO.DTO_ManageUser",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.UserController",
+    "Method": "List",
+    "RelativePath": "api/User",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "active",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.UserController",
+    "Method": "Reterive",
+    "RelativePath": "api/User/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.UserController",
+    "Method": "Delete",
+    "RelativePath": "api/User/{userId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[MindEarth.Web.WeatherForecast, MindEarth.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]

@@ -1,0 +1,5 @@
+<div class="card-body mb-6">
+    <button  *ngFor="let btn of buttons; let i = index" type={{btn.type}} class="m-1"  [ngClass]="btn.class" (click)="toolBarClickEvent(btn);" >
+        <span [ngClass]="btn.iconClass"></span>
+    </button>
+</div>

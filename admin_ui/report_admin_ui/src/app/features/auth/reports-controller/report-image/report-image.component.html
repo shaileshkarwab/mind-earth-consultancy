@@ -1,0 +1,40 @@
+<div class="card card-primary">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                {{reportImage.imageName}} - {{reportImage.imageTitle}}  
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {{reportImage.figure}}
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 text-center">
+                <img [src]="imagePreview" class="image-preview">
+            </div>
+        </div>
+
+    </div>
+    <div class="card-footer">
+        <div class="text-end">
+            <button (click)="uploadImageCommand();" type="button" class="btn btn-sm btn-primary me-2">
+                <i class={{boxIcons.UPLOAD}}></i>
+            </button>
+
+            <button (click)="saveImageCommand();"  *ngIf="reportImage.isImageChanged" type="button" class="btn btn-sm btn-primary me-2">
+                <i class={{boxIcons.SAVE}}></i>
+            </button>
+
+            <!-- <button (click)="deleteReportImageCommand()"  *ngIf="reportImage.isImageAvailable" type="button" class="btn btn-sm btn-danger">
+                <i class={{boxIcons.DELETE}}></i>
+            </button> -->
+        </div>
+        <div class="text-center" *ngIf="reportImage.isImageChanged">
+            <span>
+                <small class="text-danger">A new file is added. Please upload the image by clicking save.</small>
+            </span>
+        </div>
+    </div>
+</div>

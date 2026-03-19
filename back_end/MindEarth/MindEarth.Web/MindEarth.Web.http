@@ -1,0 +1,6 @@
+@MindEarth.Web_HostAddress = http://localhost:5005
+
+GET {{MindEarth.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

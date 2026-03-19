@@ -1,0 +1,108 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel1">Mange Roles & Permession</h5>
+        </div>
+        <form [formGroup]="roleForm!" (ngSubmit)="onSumit()" >
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <app-label>Role Name:</app-label>
+                            <input type="text" class="form form-control form-control-sm" formControlName="roleName">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
+                                    formControlName="isActive">
+                                <label class="form-check-label text-danger" for="inlineCheckbox3">
+                                    Active
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="max-height: 40vh; height: 40vh; overflow-y:auto;">
+                    <div class="col-12">
+                        <table class="table table-sm table-bordered" formArrayName="menuDetails">
+                            <thead>
+                                <tr>
+                                    <th style="width: 2vw;">#</th>
+                                    <th>Module</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let menu of menuDetails.controls; let i = index"
+                                    [formGroupName]="i">
+                                    <tr>
+                                        <td>{{i+1}}</td>
+                                        <td>{{menu.get('text')?.value}}</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <table class="table table-sm table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 2vw;">#</th>
+                                                        <th style="width: 60vw;">Permission For</th>
+                                                        <th>Add</th>
+                                                        <th>View</th>
+                                                        <th>Modify</th>
+                                                        <th>Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody formArrayName="details">
+                                                    <tr *ngFor="let detail of getDetails(i).controls; let j = index"
+                                                        [formGroupName]="j">
+                                                        <td>{{j+1}}</td>
+                                                        <td>
+                                                            {{detail.get('text')?.value}}
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" formControlName="addRight">
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" formControlName="viewRight">
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" formControlName="modifyRight">
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" formControlName="deleteRight">
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary m-2">
+                        <i class="{{boxIcon.SAVE}}"></i>
+                    </button>
+                    <button type="button" class="btn btn-secondary m-2" (click)="activeModal.close('Close click')">
+                        <i class="{{boxIcon.CLOSE}}"></i>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>

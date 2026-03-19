@@ -1,0 +1,70 @@
+<div class="card-body mb-6">
+    <app-tool-bar [buttons]="buttons" (clickEvent)="clickCommand($event);"></app-tool-bar>
+</div>
+
+<form [formGroup]="reportForm!">
+
+    <div class="card mb-6">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4">
+                    <app-label>Category</app-label>
+                    <select class="form form-control form-control-sm form-select" formControlName="subCategoryMasterId">
+                        <option value="">Select valid category</option>
+                        <option *ngFor="let opt of roles$|async" [value]="opt.rowId">
+                            {{opt.value}}
+                        </option>
+                    </select>
+                    <app-error-handler [control]="reportForm.get('subCategoryMasterId')"
+                        fieldName="Report Category"></app-error-handler>
+                </div>
+                <div class="col-8">
+                    <app-label>Report URL</app-label>
+                    <input type="text" class="form form-control form-control-sm" formControlName="reportUrlLink">
+                    <app-error-handler [control]="reportForm.get('reportUrlLink')"
+                        fieldName="Report URL"></app-error-handler>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-4">
+                    <app-label>Upload Excel File</app-label>
+                    <input type="file" class="form form-control form-control-sm" (change)="onFileSelected($event)">
+                </div>
+                <div class="col-3 mt-4">
+                    <button type="button" class="btn btn-md btn-primary" (click)="uploadFileCommand();">
+                        <i class="bx bx-upload me-2"></i>Upload File & Save
+                    </button>
+                </div>
+                <div class="col-3 mt-4">
+                    <label>File Name</label>
+                    <section>
+                        <label>{{ reportForm.get('excelFileName')?.value }}</label>
+                    </section>
+                </div>
+                <div class="col-2 mt-6">
+                    <label>
+                        <a href="javascript:void(0)">Download File</a>
+                    </label>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="card mb-6">
+        <div class="card-header">
+            <h6 class="card-title" >Upload Report Images</h6>
+        </div>
+        <div class="card-body">
+            <div class="row mt-2">
+                <div class="col-6 mt-2 mb-2" *ngFor="let image of reportImages; let i = index">
+                    <app-report-image [reportImage]="image" (selectedImage)="selectedImageCommand($event,image);"
+                        (saveImageEvent)="saveReportImageCommnd(image);"
+                        (deleteImageEvent)="deleteRportImageCommand($event);"></app-report-image>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
