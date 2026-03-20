@@ -18,176 +18,28 @@ import {
   Tab,
   Tabs,
 } from '@mui/material';
-import { styled, keyframes } from '@mui/system';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { SURFACE_GREEN_LIGHT } from './theme/tokens';
 import {
-  BRAND_GREEN,
-  TEXT_DARK,
-  TEXT_BODY,
-  SURFACE_GREEN_LIGHT,
-  FOOTER_BG,
-  SHADOW_SOFT,
-  SHADOW_SOFT_HOVER,
-  BTN_RADIUS,
-} from './theme/tokens';
-
-// ========================
-// Keyframes
-// ========================
-const fadeInUp = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-`;
-
-// ========================
-// Constants
-// ========================
-const GREEN = BRAND_GREEN;
-const DARK  = TEXT_DARK;
-const GRAY  = TEXT_BODY;
-
-const SECTION_SHELL = {
-  mx: { xs: 1.5, sm: 2.5, md: 3 },
-  borderRadius: '10px',
-  overflow: 'hidden',
-} as const;
-
-// ========================
-// Styled Components
-// ========================
-const EyebrowPill = styled(Box)({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '5px',
-  padding: '5px 20px',
-  borderRadius: '100px',
-  background: 'rgba(0,0,0,0.04)',
-  color: GREEN,
-  fontSize: '0.72rem',
-  fontWeight: 700,
-  textTransform: 'uppercase',
-  letterSpacing: '0.12em',
-  lineHeight: '26px',
-});
-
-const IndustryCard = styled(Box)({
-  borderRadius: '10px',
-  paddingTop: '40px',
-  padding: '40px 50px',
-  background: 'linear-gradient(to bottom, #f7f8fa 0%, #fff 100%)',
-  transition: 'box-shadow 0.3s',
-  position: 'relative',
-  overflow: 'hidden',
-  '&:hover': {
-    boxShadow: '0 12px 40px rgba(0,0,0,0.12)',
-  },
-  '&:hover .card-overlay': {
-    opacity: 1,
-  },
-});
-
-const ReportCard = styled(Card)({
-  border: '1px solid #d8dde6',
-  borderRadius: '4px',
-  boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
-  transition: 'box-shadow 0.2s, border-color 0.2s, transform 0.2s',
-  display: 'flex',
-  flexDirection: 'column',
-  '&:hover': {
-    boxShadow: '0 8px 30px rgba(0,0,0,0.08)',
-    borderColor: GREEN,
-    transform: 'translateY(-3px)',
-  },
-});
-
-const PressCard = styled(Box)({
-  borderRadius: '10px',
-  padding: '40px',
-  background: SURFACE_GREEN_LIGHT,
-  transition: 'box-shadow 0.3s',
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100%',
-  position: 'relative',
-  overflow: 'hidden',
-  '&:hover': {
-    boxShadow: '0 12px 40px rgba(0,0,0,0.08)',
-  },
-  '&:hover .card-overlay': {
-    opacity: 1,
-  },
-});
-
-const WhyRow = styled(Box)({
-  display: 'flex',
-  gap: '16px',
-  paddingBottom: '20px',
-  marginBottom: '20px',
-  borderBottom: '1px solid #d8dde6',
-  '&:last-child': { borderBottom: 'none', marginBottom: 0, paddingBottom: 0 },
-});
-
-const CertBadge = styled(Box)({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '6px',
-  padding: '14px 8px',
-});
-
-const FooterSection = styled(Box)({
-  background: FOOTER_BG,
-  color: '#a8bdd1',
-  paddingTop: '56px',
-});
-
-const GreenBtn = {
-  bgcolor: GREEN,
-  color: '#fff',
-  borderRadius: BTN_RADIUS,
-  textTransform: 'none',
-  letterSpacing: '0.3px',
-  px: '20px',
-  py: '10px',
-  fontSize: '0.82rem',
-  fontWeight: 600,
-  border: `2px solid ${GREEN}`,
-  boxShadow: SHADOW_SOFT,
-  transition: 'all 0.3s ease',
-  '&:hover': {
-    bgcolor: 'transparent',
-    color: GREEN,
-    borderColor: GREEN,
-    boxShadow: SHADOW_SOFT_HOVER,
-    transform: 'translateY(-2px)',
-  },
-} as const;
-
-const DarkBtn = {
-  bgcolor: '#333',
-  color: '#fff',
-  borderRadius: BTN_RADIUS,
-  textTransform: 'none',
-  letterSpacing: '0.3px',
-  px: '20px',
-  py: '10px',
-  fontSize: '0.82rem',
-  fontWeight: 600,
-  border: '2px solid #333',
-  boxShadow: SHADOW_SOFT,
-  transition: 'all 0.3s ease',
-  '&:hover': {
-    bgcolor: 'transparent',
-    color: '#333',
-    borderColor: '#333',
-    boxShadow: SHADOW_SOFT_HOVER,
-    transform: 'translateY(-2px)',
-  },
-} as const;
+  fadeInUp,
+  GREEN,
+  DARK,
+  GRAY,
+  SECTION_SHELL,
+  EyebrowPill,
+  IndustryCard,
+  ReportCard,
+  PressCard,
+  WhyRow,
+  CertBadge,
+  FooterSection,
+  GreenBtn,
+  DarkBtn,
+} from './page.styles';
 
 // ========================
 // Section Header Component
