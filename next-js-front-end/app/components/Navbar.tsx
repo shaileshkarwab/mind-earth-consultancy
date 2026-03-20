@@ -5,13 +5,9 @@ import {
   Box,
   Container,
   Typography,
-  Button,
-  AppBar,
   Toolbar,
   Link as MuiLink,
-  Paper,
 } from '@mui/material';
-import { styled, keyframes } from '@mui/system';
 import Image from 'next/image';
 import Link from 'next/link';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -20,10 +16,18 @@ import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import {
   BRAND_GREEN,
   TEXT_DARK,
-  SHADOW_MENU,
-  SHADOW_SOFT_HOVER,
   BTN_RADIUS,
 } from '../theme/tokens';
+import {
+  TopBar,
+  StyledNavBar,
+  MegaMenuWrapper,
+  CategoryHeading,
+  MenuItemLink,
+  NavButton,
+  DropdownMenu,
+  DropdownItem,
+} from '../page.styles';
 
 // ========================
 // Mega Menu Data
@@ -190,123 +194,6 @@ const insightsDropdown = [
 ];
 
 // ========================
-// Styled Components
-// ========================
-const TopBar = styled(Box)({
-  background: '#fff',
-  borderBottom: '1px solid #e0e0e0',
-  padding: '0',
-});
-
-const StyledNavBar = styled(AppBar)({
-  background: 'transparent',
-  boxShadow: 'none',
-  position: 'relative',
-});
-
-
-
-const slideDown = keyframes`
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
-`;
-
-const MegaMenuWrapper = styled(Paper)({
-  position: 'absolute',
-  top: '100%',
-  left: 0,
-  right: 0,
-  zIndex: 1200,
-  background: '#fff',
-  borderRadius: '0 0 12px 12px',
-  boxShadow: SHADOW_MENU,
-  animation: `${slideDown} 0.25s ease-out`,
-  borderTop: `3px solid ${BRAND_GREEN}`,
-});
-
-const CategoryHeading = styled(Typography)({
-  fontSize: '0.85rem',
-  fontWeight: 700,
-  color: BRAND_GREEN,
-  marginBottom: '10px',
-  paddingBottom: '8px',
-  borderBottom: '1px solid #e0e0e0',
-});
-
-const MenuItemLink = styled(Link)({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '6px',
-  padding: '5px 10px',
-  borderRadius: '6px',
-  fontSize: '0.825rem',
-  fontWeight: 500,
-  color: '#334155',
-  textDecoration: 'none',
-  transition: 'all 0.2s ease',
-  '&:hover': {
-    background: '#f0f7f0',
-    color: BRAND_GREEN,
-    paddingLeft: '14px',
-  },
-});
-
-const NavButton = styled(Button)({
-  color: TEXT_DARK,
-  fontWeight: 600,
-  fontSize: '0.85rem',
-  textTransform: 'none',
-  letterSpacing: '0.3px',
-  position: 'relative',
-  '&::after': {
-    content: '""',
-    position: 'absolute',
-    bottom: 6,
-    left: '50%',
-    width: 0,
-    height: '2px',
-    background: BRAND_GREEN,
-    transition: 'all 0.3s ease',
-    transform: 'translateX(-50%)',
-  },
-  '&:hover::after, &.active::after': {
-    width: '70%',
-  },
-  '&:hover': {
-    background: 'transparent',
-    color: BRAND_GREEN,
-  },
-});
-
-const DropdownMenu = styled(Paper)({
-  position: 'absolute',
-  top: '100%',
-  left: 0,
-  zIndex: 1200,
-  background: '#fff',
-  borderRadius: '0 0 8px 8px',
-  boxShadow: SHADOW_SOFT_HOVER,
-  animation: `${slideDown} 0.2s ease-out`,
-  borderTop: `2px solid ${BRAND_GREEN}`,
-  minWidth: '220px',
-  padding: '8px 0',
-});
-
-const DropdownItem = styled(Link)({
-  display: 'block',
-  padding: '10px 20px',
-  fontSize: '0.85rem',
-  fontWeight: 500,
-  color: '#334155',
-  textDecoration: 'none',
-  transition: 'all 0.2s ease',
-  '&:hover': {
-    background: '#f0f7f0',
-    color: BRAND_GREEN,
-  },
-});
-
-// ========================
 // Navbar Component
 // ========================
 export default function Navbar() {
@@ -382,7 +269,7 @@ export default function Navbar() {
       </TopBar>
 
       {/* Navbar */}
-      <StyledNavBar position="sticky" sx={{ bgcolor: '#fff', borderBottom: '1px solid #eee' }}>
+      <StyledNavBar position="sticky" sx={{ bgcolor: '#fff', marginTop:1}}>
         <Container maxWidth={false}>
           <Toolbar sx={{ justifyContent: 'space-between', px: 0, minHeight: '70px !important' }}>
             {/* Logo */}
@@ -398,7 +285,7 @@ export default function Navbar() {
             </Link>
 
             {/* Nav Links */}
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5, alignItems: 'center' }}>
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5, alignItems: 'center', mr: 3 }}>
               <Link href="/" style={{ textDecoration: 'none' }}>
                 <NavButton>Home</NavButton>
               </Link>
@@ -482,9 +369,6 @@ export default function Navbar() {
                 <NavButton>About Us</NavButton>
               </Link>
             </Box>
-
-            {/* Right side — empty since LOGIN is in top bar */}
-            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }} />
           </Toolbar>
         </Container>
 
