@@ -207,7 +207,7 @@ export default function Page() {
       {/* ======= ESG Section ======= */}
       <Box sx={{ ...SECTION_SHELL, bgcolor: SURFACE_GREEN_LIGHT, pt: 3, pb: 3, mt: 2, border: '1px solid #e9ecef' }}>
         <Container maxWidth="lg">
-          <Grid container spacing={4} alignItems="flex-start">
+          <Grid container spacing={6} alignItems="flex-start">
             <Grid size={{ xs: 12, lg: 5 }}>
               <EyebrowPill sx={{ mb: 2.5 }}>
                 <span style={{ fontSize: '1rem' }}>🎧</span>
@@ -216,11 +216,11 @@ export default function Page() {
               <Typography variant="h2" sx={{ fontWeight: 600, color: DARK, mb: 1, fontSize: 'clamp(1.5rem, 2.5vw, 2rem)', lineHeight: 1.3, letterSpacing: '-0.03em' }}>
                 Dedicated ESG Research for the Sustainable Economy
               </Typography>
-              <Typography sx={{ fontWeight: 600, fontSize: '0.9rem', color: '#333', mb: 2, lineHeight: 1.7 }}>
+              <Typography sx={{ fontWeight: 200, fontSize: '0.9rem', color: '#333', mb: 2, lineHeight: 1.7 }}>
                 Our ESG practice delivers investor-grade intelligence on sustainability markets, BRSR compliance, carbon credits, green finance, and climate risk &mdash; built for India and global markets.
               </Typography>
               <Box sx={{ borderTop: '1px solid #ccc', pt: 1.5, mt: 1 }}>
-                <Box sx={{ display: 'flex', gap: 1.5, mt: 1.5, mb: 2.5, alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', gap: 1.5, mt: 1, mb: 1.5, alignItems: 'center' }}>
                   <Button variant="contained" sx={GreenBtn}>
                     ✏️&nbsp; Enter ESG Insights Hub
                   </Button>
