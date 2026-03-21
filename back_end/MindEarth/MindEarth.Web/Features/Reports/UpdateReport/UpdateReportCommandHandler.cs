@@ -18,14 +18,14 @@ namespace MindEarth.Web.Features.Reports.UpdateReport
         private readonly IUserCommonService userCommonService;
         private readonly IReportExcelService reportExcelService;
         private readonly string reportImageWebPath;
-        private readonly IConfiguration configuration;
-        public UpdateReportCommandHandler(MindEarthContext context, IUserCommonService userCommonService, IReportExcelService reportExcelService, IConfiguration configuration)
+        private readonly IConfigParamService configuration;
+        public UpdateReportCommandHandler(MindEarthContext context, IUserCommonService userCommonService, IReportExcelService reportExcelService, IConfigParamService configuration)
         {
             this.context = context;
             this.userCommonService = userCommonService;
             this.reportExcelService = reportExcelService;
             this.configuration = configuration;
-            reportImageWebPath = this.configuration.GetSection("AppSettings:WebPath").Get<string>();
+            reportImageWebPath = this.configuration.GetWebPath();
         }
         public async Task<Result<DTO_CreateReportReponse>> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
         {

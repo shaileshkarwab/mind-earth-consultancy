@@ -4,20 +4,21 @@ using Microsoft.EntityFrameworkCore;
 using MindEarth.Database.Entity;
 using MindEarth.Web.Extension;
 using MindEarth.Web.Features.Reports.DTO;
+using MindEarth.Web.Features.Services;
 
 namespace MindEarth.Web.Features.Reports.QueryReports
 {
     public class ListReportQueryForExternalHandler : IRequestHandler<ListReportQueryForExternal, Result<List<DTO_ReportExternal>>>
     {
         private readonly MindEarthContext context;
-        private readonly IConfiguration configuration;
+        private readonly IConfigParamService configuration;
         const string folderPath = "reports";
         private readonly string webDocumentPath;
-        public ListReportQueryForExternalHandler(MindEarthContext context, IConfiguration configuration )
+        public ListReportQueryForExternalHandler(MindEarthContext context, IConfigParamService configuration )
         {
             this.context = context;
             this.configuration = configuration;
-            webDocumentPath = this.configuration.GetSection("AppSettings:WebPath").Get<string>();
+            webDocumentPath = this.configuration.GetWebPath();
         }
         public async Task<Result<List<DTO_ReportExternal>>> Handle(ListReportQueryForExternal request, CancellationToken cancellationToken)
         {

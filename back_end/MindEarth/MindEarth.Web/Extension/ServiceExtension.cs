@@ -28,6 +28,7 @@ namespace MindEarth.Web.Extension
             services.AddScoped<IExistenceChecker, ExistenceChecker>();
             services.AddScoped<IGenericIDService, GenericIDService>();
             services.AddScoped<IReportExcelService, ReportExcelService>();
+            services.AddSingleton<IConfigParamService, ConfigParamService>();
             services.AddHttpContextAccessor();
             return services;
         }

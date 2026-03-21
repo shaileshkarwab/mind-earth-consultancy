@@ -114,7 +114,7 @@ export class ManageReportComponent implements OnInit {
 
   buildForm() {
     this.reportForm = this.formBuilder.group({
-      reportUrlLink: [, [Validators.required, Validators.minLength(8)]],
+      reportUrlLink: [, [Validators.required, Validators.minLength(8),Validators.pattern(/^[^\s&]+$/)]],
       isActive: [true],
       rowId: [null],
       excelSaveFileName: [null],

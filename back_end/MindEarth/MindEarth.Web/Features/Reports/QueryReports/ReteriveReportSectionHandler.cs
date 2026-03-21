@@ -4,20 +4,21 @@ using Microsoft.EntityFrameworkCore;
 using MindEarth.Database.Entity;
 using MindEarth.Web.Errors;
 using MindEarth.Web.Features.Reports.DTO;
+using MindEarth.Web.Features.Services;
 
 namespace MindEarth.Web.Features.Reports.QueryReports
 {
     public class ReteriveReportSectionHandler : IRequestHandler<ReteriveReportSection, Result<List<DTO_Excel>>>
     {
         private readonly MindEarthContext context;
-        private readonly IConfiguration configuration;
+        private readonly IConfigParamService configuration;
         const string folderpath = "reports";
         private readonly string webPath;
-        public ReteriveReportSectionHandler(MindEarthContext context, IConfiguration configuration = null)
+        public ReteriveReportSectionHandler(MindEarthContext context, IConfigParamService   configuration = null)
         {
             this.context = context;
             this.configuration = configuration;
-            webPath = $"{this.configuration.GetSection("AppSettings:WebPath").Get<string>()}/{folderpath}";
+            webPath = $"{this.configuration.GetWebPath()}/{folderpath}";
         }
 
         //public async Task<Result<List<DTO_Excel>>> Handle(ReteriveReportSection request, CancellationToken cancellationToken)

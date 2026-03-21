@@ -11,8 +11,8 @@ namespace MindEarth.Web.Features.Reports.QueryReports
     public class ReteriveReportQueryHandler : IRequestHandler<ReteriveReportQuery, Result<DTO_Report>>
     {
         private readonly MindEarthContext context;
-        private readonly IConfiguration configuration;
-        public ReteriveReportQueryHandler(MindEarthContext context, IConfiguration configuration)
+        private readonly IConfigParamService configuration;
+        public ReteriveReportQueryHandler(MindEarthContext context, IConfigParamService configuration)
         {
             this.context = context;
             this.configuration = configuration;
@@ -24,7 +24,7 @@ namespace MindEarth.Web.Features.Reports.QueryReports
             {
                 return Result.Fail(new NoDataFound());
             }
-            var reportImageWebPath = this.configuration.GetSection("AppSettings:WebPath").Get<string>();
+            var reportImageWebPath = this.configuration.GetWebPath();
             var resonse = new DTO_Report
             {
                 CategoryId = report.SubCategoryMaster.RowId,
