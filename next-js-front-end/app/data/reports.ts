@@ -1503,3 +1503,94 @@ export function getAllSubCategoryLinks(): string[] {
 export function getAllSlugs(): string[] {
   return Object.keys(reportsData);
 }
+
+// ========================
+// Data
+// ========================
+export const esgAccordionItems = [
+  { tag: 'India Market', title: 'BRSR Compliance Market 2025\u20132033', desc: "Sizing of India's sustainability reporting ecosystem and SEBI mandate impact." },
+  { tag: 'Global', title: 'Carbon Credit Markets \u2014 Deep Dive', desc: 'Voluntary and compliance carbon market dynamics, pricing, and regional opportunity maps.' },
+  { tag: 'Finance Sector', title: 'Green Finance & ESG Bonds Report', desc: 'Issuance trends, investor appetite, regulatory landscape, and 10-year forecasts.' },
+  { tag: 'Enterprise', title: 'Net Zero Strategy Intelligence', desc: 'Sector-by-sector decarbonisation pathways aligned to SBTi and Paris Agreement targets.' },
+];
+
+export const serviceTabs = [
+  {
+    label: 'White Papers',
+    title: 'Market Intelligence Platform',
+    desc: "Horizon is MindEarth's subscription-based intelligence portal \u2014 delivering continuous, real-time market data, competitive benchmarking, and trend analysis across all major industries.",
+    bullets: ['ESG Research Papers', 'Industry-Specific ESG Studies', 'Sustainability Framework Analysis', 'Climate & Net-Zero Research'],
+    cta: 'Explore Horizon',
+    img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80&auto=format&fit=crop',
+  },
+  {
+    label: 'Case Studies',
+    title: 'Brainshare Consulting Services',
+    desc: 'Our consulting and advisory arm provides comprehensive, research-based strategic guidance. Our analysts are united in their commitment to client outcomes and passionate about delivering quick, effective decision-making support.',
+    bullets: ['ESG Transformation Projects', 'BRSR Implementation Case Studies', 'Net-Zero Transition Case Studies', 'ESG Audit Success Stories'],
+    cta: 'Explore Brainshare',
+    img: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&q=80&auto=format&fit=crop',
+  },
+  {
+    label: 'Blogs',
+    title: 'Syndicated Industry Reports',
+    desc: 'MindEarth publishes over 240 syndicated reports annually, covering 45+ industries on a global and regional basis. Each report is built on rigorous primary and secondary research methodologies.',
+    bullets: ['ESG Trends & Updates', 'Sustainability Best Practices', 'Climate & Energy Insights', 'Governance & Compliance'],
+    cta: 'Browse Reports',
+    img: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80&auto=format&fit=crop',
+  },
+  {
+    label: 'Press Releases',
+    title: 'Full-Time Research Engagement',
+    desc: 'Companies requiring ongoing day-to-day research support benefit from our dedicated Research Partnership model \u2014 a one-stop solution for all information needs with a dedicated team.',
+    bullets: ['Company Announcements', 'New Partnerships & Collaborations', 'Project Milestones', 'Media Coverage'],
+    cta: 'Schedule a Discussion',
+    img: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop',
+  },
+  {
+    label: 'ESG Updates / Regulatory Updates',
+    title: 'Custom Research Services',
+    desc: "When off-the-shelf doesn't cover your unique strategic questions, our custom research practice designs bespoke studies built precisely around your organisation's needs.",
+    bullets: ['Policy & Regulatory Changes', 'ESG Reporting Updates', 'Government Sustainability Initiatives'],
+    cta: 'Request Custom Research',
+    img: 'https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=800&q=80&auto=format&fit=crop',
+  },
+];
+
+export const industries = [
+  { name: 'Healthcare & Life Sciences', count: '7 sub-sectors \u00b7 1,200+ reports', subs: 'Biotechnology | Pharmaceuticals | Medical Devices', icon: '\u{1F3E5}' },
+  { name: 'Technology & Digital',       count: '7 sub-sectors \u00b7 980+ reports',   subs: 'Next Gen Technologies | Network Security | Digital Media', icon: '\u{1F4BB}' },
+  { name: 'Specialty & Fine Chemicals', count: '4 sub-sectors \u00b7 640+ reports',   subs: 'Renewable Chemicals | Catalysts & Enzymes', icon: '\u{1F9EA}' },
+  { name: 'Advanced Materials',         count: '6 sub-sectors \u00b7 520+ reports',   subs: 'Smart Textiles | Green Building Materials', icon: '\u2697\uFE0F' },
+  { name: 'Consumer Goods',             count: '5 sub-sectors \u00b7 750+ reports',   subs: 'Beauty & Personal Care | Consumer F&B', icon: '\u{1F6CD}\uFE0F' },
+  { name: 'Food & Beverages',           count: '4 sub-sectors \u00b7 600+ reports',   subs: 'Nutraceuticals | Food Safety & Processing', icon: '\u{1F33E}' },
+];
+
+export const stats = [
+  { num: '10', suffix: 'K+', label: 'Reports Published' },
+  { num: '50', suffix: '+',  label: 'Industries Covered' },
+  { num: '500', suffix: '+', label: 'Expert Analysts' },
+  { num: '44', suffix: '',   label: 'Countries Served' },
+];
+
+export const reports = [
+  { tag: 'Healthcare',     title: 'Dental Membrane Market Size & Share Report 2025\u20132033', desc: 'The global dental membrane market was valued at USD 682.46 million in 2025 and is projected to reach USD 1,186.38 million by 2033, driven by rising dental implant...', cagr: '7.27%', img: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=500&q=80&auto=format&fit=crop' },
+  { tag: 'Food & Bev',     title: 'Middle East Digestive Health Supplements Market 2025\u20132033', desc: 'Valued at USD 435.7 million in 2025, this market is expected to reach USD 951.1 million by 2033 on the back of growing health awareness and premium...', cagr: '10.1%', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80&auto=format&fit=crop' },
+  { tag: 'Biotechnology',  title: 'Gene Editing Market Size, Share & Trends Report 2025\u20132033', desc: 'The global gene editing market size was estimated at USD 5.87 billion in 2025 and is projected to reach USD 18.55 billion by 2033, fuelled by CRISPR...', cagr: '15.71%', img: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=500&q=80&auto=format&fit=crop' },
+  { tag: 'Semiconductors', title: 'LED Driver Market Size & Forecast 2025\u20132033', desc: 'The global LED driver market size was estimated at USD 57.87 billion in 2025, projected to reach USD 123.54 billion by 2033, driven by smart lighting and IoT...', cagr: '10.1%', img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80&auto=format&fit=crop' },
+  { tag: 'Healthcare',     title: 'Anti-aging Supplements Market Size & Trends 2025\u20132033', desc: 'The global anti-aging supplements market size is expected to reach USD 9.06 billion by 2033, registering strong CAGR from rising longevity awareness and...', cagr: '8.49%', img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&q=80&auto=format&fit=crop' },
+  { tag: 'Automotive',     title: 'Automotive Fuel Cell Market Size & Share 2025\u20132033', desc: 'The global automotive fuel cell market was estimated at USD 6.89 billion in 2025, projected to reach USD 10.06 billion by 2033 amid growing zero-emission...', cagr: '4.9%', img: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=500&q=80&auto=format&fit=crop' },
+];
+
+export const pressReleases = [
+  { title: 'Gene Editing Market Size To Reach $18.55 Billion By 2033', desc: 'The global gene editing market is projected to reach USD 18.55 billion by 2033, growing at a CAGR of 15.71%.', date: 'Feb 2026' },
+  { title: 'Anti-aging Supplements Market To Reach $9.06 Billion By 2033', desc: 'The anti-aging supplements market is expected to reach USD 9.06 billion by 2033, registering a CAGR of 8.49%.', date: 'Feb 2026' },
+  { title: 'LED Driver Market To Surpass $123 Billion By 2033', desc: 'Technological advancements in smart lighting components driving strong growth in the global LED driver ecosystem.', date: 'Jan 2026' },
+];
+
+export const whyPoints = [
+  { title: 'Global Perspective', desc: 'We have worked with clients in 44 countries. Our perspective means we know what is happening in your regional market and what is working elsewhere in the world.', img: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5ce?w=80&q=80&auto=format&fit=crop' },
+  { title: 'Deep Industry Experience', desc: 'We have completed numerous consulting projects across industries. Whatever you do, chances are we already have experience with something very similar.', img: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=80&q=80&auto=format&fit=crop' },
+  { title: 'Dedicated Support', desc: 'Personalised attention from start to finish with a single point of contact who understands your business objectives and strategic context.', img: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=80&q=80&auto=format&fit=crop' },
+  { title: 'Proven Process', desc: 'Reliable, time-tested research methodology combining quantitative modelling, expert interviews, and rigorous data validation.', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=80&q=80&auto=format&fit=crop' },
+];
