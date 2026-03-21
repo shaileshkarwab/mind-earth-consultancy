@@ -70,7 +70,8 @@ export class ManageCategoryComponent implements OnInit {
       name: [data?.name || '', Validators.required],
       isActive: [data?.isActive || '', Validators.required],
       rowId: [data?.rowId || ''],
-      seqNo: [data?.seqNo || 0, Validators.required]
+      seqNo: [data?.seqNo || 0, Validators.required],
+      subCategoryListUrl: [data?.subCategoryListUrl || '', Validators.required]
     });
   }
 
@@ -91,7 +92,8 @@ export class ManageCategoryComponent implements OnInit {
     return this.formBuilder.group({
       name: ['', Validators.required],
       seqNo: ['', Validators.required],
-      isActive: [true]
+      isActive: [true],
+      subCategoryListUrl:['',Validators.required]
     });
   }
 

@@ -54,4 +54,11 @@ namespace MindEarth.Web.Errors
         {
         }
     }
+
+    public class ValidationError : ApiError
+    {
+        public ValidationError(string message) : base(message, StatusCodes.Status400BadRequest)
+        {
+        }
+    }
 }

@@ -16,6 +16,8 @@ namespace MindEarth.Web.Features.Reports.DTO
 
         public string WorkSheetName { get; set; }
 
+        public string ImageFullPath { get; set; }
+
         public List<DTO_Excel> SubNodes { get; set; } = new List<DTO_Excel>();
 
     }

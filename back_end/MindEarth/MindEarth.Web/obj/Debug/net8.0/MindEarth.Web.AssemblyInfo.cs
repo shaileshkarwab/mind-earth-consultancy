@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MindEarth.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c8069f7187b92af906ad00b3998e37470481fea4")]
 [assembly: System.Reflection.AssemblyProductAttribute("MindEarth.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MindEarth.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

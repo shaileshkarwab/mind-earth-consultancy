@@ -31,7 +31,8 @@ namespace MindEarth.Web.Features.CategorySubcategory.Query
                     IsActive = s.IsActive,
                     Name = s.Name,
                     RowId = s.RowId,
-                    SeqNo = s.SeqNo
+                    SeqNo = s.SeqNo,
+                    SubCategoryListUrl = s.SubCategoryListUrl
                 }).ToList()
             };
             return Result.Ok(categoryResponse);

@@ -266,6 +266,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MindEarth.Web.WebController.CategoryController",
+    "Method": "GetAllCategories",
+    "RelativePath": "api/Category/v2",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MindEarth.Web.Controllers.FileUploadController",
     "Method": "Upload",
     "RelativePath": "api/FileUpload/{uploadFolder}",
@@ -366,6 +376,22 @@
   },
   {
     "ContainingType": "MindEarth.Web.Controllers.ReportController",
+    "Method": "GetImagesAndMetaData",
+    "RelativePath": "api/Report/get-images-meta-data/{fileName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fileName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.Controllers.ReportController",
     "Method": "SaveReportImage",
     "RelativePath": "api/Report/Image/{imageRowId}",
     "HttpMethod": "PATCH",
@@ -427,6 +453,38 @@
     "Parameters": [
       {
         "Name": "reportID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.WebController.ReportController",
+    "Method": "GetReports",
+    "RelativePath": "api/Report/v2",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filter",
+        "Type": "MindEarth.Web.Common.Models.Filter",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MindEarth.Web.WebController.ReportController",
+    "Method": "ReportDetails",
+    "RelativePath": "api/Report/v2/{reportUrl}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "reportUrl",
         "Type": "System.String",
         "IsRequired": true
       }

@@ -6,23 +6,32 @@ import { ToolBarAction } from '../../../../constants/tool-bar-action';
 import { LabelComponent } from "../../../../components/label/label.component";
 import { ToastService } from '../../../../services';
 import { FileUploadService } from '../../../../services/file-upload.service';
-import { EMPTY, map, Observable, of, switchMap, take } from 'rxjs';
+import { EMPTY, forkJoin, map, Observable, of, switchMap, take } from 'rxjs';
 import { ReportService } from '../service/report.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MasterService } from '../../master-controller/service/master.service';
 import { DtoLookup } from '../../master-controller/models/dto-lookup';
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { ErrorHandlerComponent } from "../../../../components";
-import { DtoReportImage } from '../models/dto-report-image';
+import { DtoReportImage, DtoSaveReportResonse } from '../models/dto-report-image';
 import { ReportImageComponent } from "../report-image/report-image.component";
 import { ActivatedRoute, Router } from '@angular/router';
 import { DtoReport } from '../models/dto-report';
 import { ConfirmService } from '../../../../services/confirm.service';
+import { UploadImageComponent } from "../../../../components/upload-image/upload-image.component";
+import { BoxIcon } from '../../../../constants/box-icon';
+import { NgbNav, NgbNavContent, NgbNavItem, NgbNavItemRole, NgbNavLinkBase, NgbNavLinkButton, NgbNavOutlet } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-manage-report',
   standalone: true,
-  imports: [ToolBarComponent, LabelComponent, ReactiveFormsModule, NgFor, AsyncPipe, ErrorHandlerComponent, ReportImageComponent],
+  imports: [ToolBarComponent, LabelComponent, ReactiveFormsModule, NgFor, AsyncPipe, ErrorHandlerComponent, ReportImageComponent, UploadImageComponent, NgbNavContent,
+    NgbNav,
+    NgbNavItem,
+    NgbNavItemRole,
+    NgbNavLinkButton,
+    NgbNavLinkBase,
+    NgbNavOutlet, NgIf],
   templateUrl: './manage-report.component.html',
   styleUrl: './manage-report.component.css'
 })
@@ -41,6 +50,10 @@ export class ManageReportComponent implements OnInit {
   activeRouter = inject(ActivatedRoute);
   reportID?: string;
   confirmService = inject(ConfirmService);
+  boxIcons = BoxIcon;
+  webImageFile!: File;
+  readonly uploadFolderPath: string = "reports";
+  active: number = 1;
   ngOnInit(): void {
     this.buttons.push(ButtonConstants.BackButton());
 
@@ -95,64 +108,9 @@ export class ManageReportComponent implements OnInit {
     this.excelFile = file;
   }
 
-  uploadFileCommand() {
 
-    if (!this.excelFile) {
-      this.showMessage.error('Please selected a valid file before upload');
-      return;
-    }
 
-    if (this.reportForm.invalid) {
-      this.showMessage.error('Please check the input before saving');
-      this.reportForm.markAllAsTouched();
-      return;
-    }
 
-    const formData = new FormData();
-    formData.append("file", this.excelFile);
-    this.fileUploadService.fileUpload("reports", formData)
-      .pipe(
-        take(1),
-        map(response => response.data),
-        switchMap(data =>
-          !this.reportID ?
-
-            this.reportService.saveReport({
-              categoryId: this.reportForm.get('subCategoryMasterId')?.value,
-              excelFileName: this.excelFile.name,
-              excelSaveFileName: data,
-              isActive: this.reportForm.get('isActive')?.value,
-              reportUrlLink: this.reportForm.get('reportUrlLink')?.value
-            })
-            :
-            this.reportService.updateReport(this.reportID!, {
-              categoryId: this.reportForm.get('subCategoryMasterId')?.value,
-              excelFileName: this.excelFile.name,
-              excelSaveFileName: data,
-              isActive: this.reportForm.get('isActive')?.value,
-              reportUrlLink: this.reportForm.get('reportUrlLink')?.value
-            })
-        )
-      )
-      .pipe(
-        map(imageReponse => ({
-          reportImages: imageReponse.data.images!,
-          reportId: imageReponse.data.reportId
-        }))
-      ).subscribe(data => {
-        this.reportImages = data.reportImages,
-          this.reportID = data.reportId
-      })
-      ;
-
-  }
-
-  getFileSections() {
-    this.reportService.getReportSectionsAfterUpload("e220491c-1ef8-4d6c-9ef8-6ebf7794a028.xlsx")
-      .subscribe(data => {
-
-      });
-  }
 
   buildForm() {
     this.reportForm = this.formBuilder.group({
@@ -161,7 +119,13 @@ export class ManageReportComponent implements OnInit {
       rowId: [null],
       excelSaveFileName: [null],
       excelFileName: [null],
-      subCategoryMasterId: ['', Validators.required]
+      subCategoryMasterId: ['', Validators.required],
+      reportTitle: ['', [Validators.required]],
+      reportDesc: ['', [Validators.required]],
+      reportWebImage: [null],
+      reportKeyWords: ['', Validators.required],
+      reportWebPageTitle: ['', Validators.required],
+      showOnHomePage: ["false"]
     });
   }
 
@@ -178,7 +142,14 @@ export class ManageReportComponent implements OnInit {
       reportUrlLink: data.reportUrlLink,
       excelFileName: data.excelFileName,
       isActive: data.isActive,
-      rowId: data.rowId
+      rowId: data.rowId,
+      reportTitle: data.reportTitle,
+      reportDesc: data.reportDesc,
+      reportWebImage: data.reportWebImage,
+      excelSaveFileName: data.excelSaveFileName,
+      reportKeyWords: data.reportKeyWords,
+      reportWebPageTitle: data.reportWebPageTitle,
+      showOnHomePage: data.showOnHomePage
     });
   }
 
@@ -228,4 +199,103 @@ export class ManageReportComponent implements OnInit {
         this.reportImages.slice(reportImageIndex, 1);
       });
   }
+
+  webImageFileCommand(file: File) {
+    this.webImageFile = file;
+  }
+
+  createFormData(file: File): FormData {
+    const formData = new FormData();
+    formData.append('file', file);
+    return formData;
+  }
+
+  uploadExcelFile() {
+    if (this.excelFile) {
+      this.fileUploadService.fileUpload(this.uploadFolderPath, this.createFormData(this.excelFile))
+        .pipe(
+          switchMap(response =>
+            this.reportService.getReportSectionsAndMetaData(response.data)
+          )
+        )
+        .subscribe({
+          next: (next) => {
+            if (next.success) {
+              this.reportForm.patchValue({
+                reportUrlLink: next.data.reportUrl,
+                reportTitle: next.data.reportHeading,
+                reportDesc: next.data.reportDesc,
+                reportKeyWords: next.data.keyWords,
+                reportWebPageTitle: next.data.pageTitle,
+                excelSaveFileName: next.data.excelSaveFileName
+              });
+              this.reportImages = next.data.images!;
+            }
+
+          },
+          error: (error) => { }
+        });
+    }
+  }
+
+  onSubmit() {
+    if (this.reportForm.valid) {
+      if (!this.reportID) {
+        this.saveReport()
+          .subscribe({
+            next: (next) => {
+              this.showMessage.success('The report has bee created sucessfully');
+              this.reportID = next.reportId;
+              this.reportImages = next.images!;
+
+            },
+            error: (error) => { }
+          });
+      }
+      else {
+        this.updateReport()
+          .subscribe({
+            next: (next) => {
+              this.showMessage.success('The report has bee updatedsucessfully');
+              this.reportID = next.reportId;
+              this.reportImages = next.images!;
+            },
+            error: (error) => { }
+          });
+      }
+    }
+    else {
+      this.showMessage.error('Please check the inputs. Unable to save the report');
+    }
+  }
+
+  saveReport(): Observable<DtoSaveReportResonse> {
+    const dto = this.setDTO();
+    return this.reportService.saveReport(dto)
+      .pipe(map(response => response.data));
+  }
+
+  updateReport(): Observable<DtoSaveReportResonse> {
+    const dto = this.setDTO();
+    return this.reportService.updateReport(this.reportID!, dto)
+      .pipe(map(response => response.data));
+  }
+
+  setDTO(): DtoReport {
+    let dto: DtoReport = {
+      categoryId: this.reportForm.get('subCategoryMasterId')?.value,
+      excelFileName: this.excelFile ? this.excelFile.name : this.reportForm.get('excelFileName')?.value,
+      excelSaveFileName: this.reportForm.get('excelSaveFileName')?.value,
+      isActive: this.reportForm.get('isActive')?.value,
+      reportUrlLink: this.reportForm.get('reportUrlLink')?.value,
+      reportTitle: this.reportForm.get('reportTitle')?.value,
+      reportDesc: this.reportForm.get('reportDesc')?.value,
+      reportWebImage: '',
+      reportKeyWords: this.reportForm.get('reportKeyWords')?.value,
+      reportWebPageTitle: this.reportForm.get('reportWebPageTitle')?.value,
+      showOnHomePage: this.reportForm.get('showOnHomePage')?.value
+    };
+    return dto;
+  }
+
 }

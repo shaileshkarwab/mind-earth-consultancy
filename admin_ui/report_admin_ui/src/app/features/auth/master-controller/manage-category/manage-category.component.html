@@ -65,6 +65,15 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group text-danger">
+                                            <label>Sub Category URL</label>
+                                            <input type="text" formControlName="subCategoryListUrl"
+                                                class="form form-control form-control-sm">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-4">
                                         <div class="form-group text-danger">
                                             <label>Sequence</label>
@@ -83,7 +92,8 @@
                                         </div>
                                     </div>
                                     <div class="col-4 mt-4">
-                                        <button type="button" class="btn btn-sm btn-danger" (click)="deleteSubCategoryCommand(i);">
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                            (click)="deleteSubCategoryCommand(i);">
                                             <i class="bx bx-trash"></i>
                                         </button>
                                     </div>

@@ -38,6 +38,9 @@ export class ListOfReportsComponent implements OnInit {
 
     this.getListOfReports();
 
+
+    
+
   }
   clickCommand(buttonKey: ToolBarAction) {
     switch (buttonKey) {
@@ -76,5 +79,5 @@ export class ListOfReportsComponent implements OnInit {
       });
   }
 
-  
+
 }
