@@ -7,6 +7,7 @@ import { DtoReport } from '../models/dto-report';
 import { DtoReportImage, DtoSaveReportResonse } from '../models/dto-report-image';
 import { Filter } from '../../../../models/filter';
 import { DtoReportList } from '../models/dto-report-list';
+import { DtoMetaDataResponse } from '../models/dto-meta-data-response';
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +47,9 @@ export class ReportService {
 
   deleteReportImage(reportImageRowId: string): Observable<ApiResponse<boolean>> {
     return this.httpService.delete(`${UrlConstants.DELETE_REPORT_IMAGE}/${reportImageRowId}`);
+  }
+
+  getReportSectionsAndMetaData(fileName: string): Observable<ApiResponse<DtoMetaDataResponse>> {
+    return this.httpService.get(`${UrlConstants.GET_REPORT_SECTIONS_AND_META_DATA_AFTER_UPLOAD}/${fileName}`);
   }
 }

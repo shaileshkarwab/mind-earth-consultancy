@@ -27,5 +27,7 @@ namespace MindEarth.Web.Features.CategorySubcategory.Command.CreateCategory
         public int SeqNo { get; set; }
 
         public bool IsActive { get; set; }
+
+        public string? SubCategoryListUrl { get; set; }
     }
 }

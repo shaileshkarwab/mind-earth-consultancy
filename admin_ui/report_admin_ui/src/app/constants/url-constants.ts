@@ -32,4 +32,5 @@ export const UrlConstants = {
     RETERIVE_CASE_STUDY_WHITE_PAPER: "CaseStudyWhitePaper",
     UPDATE_CASE_STUDY_WHITE_PAPER: "CaseStudyWhitePaper",
     DELETE_CASE_STUDY_WHITE_PAPER: "CaseStudyWhitePaper",
+    GET_REPORT_SECTIONS_AND_META_DATA_AFTER_UPLOAD: "Report/get-images-meta-data",
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, inject, input, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, inject, input, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ToastService } from '../../services';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AppConfigConstants } from '../../constants/app-config-constants';
@@ -17,8 +17,9 @@ import { NgIf } from '@angular/common';
     }
   ]
 })
-export class UploadImageComponent implements ControlValueAccessor, OnInit {
-  
+export class UploadImageComponent implements ControlValueAccessor, OnInit, OnChanges {
+
+
 
   @Input() accept: string = '*/*';
   @Input() size: number = 120;
@@ -26,21 +27,20 @@ export class UploadImageComponent implements ControlValueAccessor, OnInit {
   imagePreview: string | ArrayBuffer | null = AppConfigConstants.DEFAULT_IMAGE;
   private file: File | null = null;
   @Output() fileSelectedEvent = new EventEmitter<File>();
-  @Input() showPreview:boolean = true; 
-  @Input() imageSource?:string;
+  @Input() showPreview: boolean = true;
+  @Input() imageSource?: string;
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) {
       return;
     }
     const file = input.files[0];
-    if(!this.acceptFile(file))
-    {
+    if (!this.acceptFile(file)) {
       this.showMessage.error('Invalid file format');
       input.value = '';
       return;
     }
-    
+
     if (file.size / 1024 > this.size) {
       this.showMessage.error(`The file should be less then ${this.size} KB`);
       input.value = '';
@@ -73,18 +73,22 @@ export class UploadImageComponent implements ControlValueAccessor, OnInit {
   setDisabledState?(isDisabled: boolean): void {
   }
 
-  acceptFile(file:File) :boolean
-  {
-    if(file.type.includes('pdf') || file.type.includes('image'))
+  acceptFile(file: File): boolean {
+    if (file.type.includes('pdf') || file.type.includes('image'))
       return true;
     else
       return false;
   }
 
   ngOnInit(): void {
-    if(this.imageSource)
-    {
+    if (this.imageSource) {
       this.imagePreview = this.imageSource;
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['imageSource']) {
+      this.imagePreview = changes['imageSource'].currentValue;
     }
   }
 }

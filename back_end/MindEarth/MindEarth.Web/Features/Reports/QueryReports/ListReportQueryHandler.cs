@@ -1,7 +1,10 @@
-﻿using FluentResults;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MindEarth.Database.Entity;
+using MindEarth.Web.Extension;
+using MindEarth.Web.Features.CategorySubcategory.Query;
 using MindEarth.Web.Features.Reports.DTO;
 
 namespace MindEarth.Web.Features.Reports.QueryReports
@@ -15,23 +18,24 @@ namespace MindEarth.Web.Features.Reports.QueryReports
         }
         public async Task<Result<List<DTO_ReportList>>> Handle(ListReportQuery request, CancellationToken cancellationToken)
         {
-            var reports = (from report in context.Reports
-                           join subCategory in context.SubCategories on report.SubCategoryMasterId equals subCategory.Id
-                           select new DTO_ReportList
-                           {
-                               ReportId = report.RowId,
-                               ReportName = report.ExcelFileName,
-                               Category = subCategory.Name,
-                               ReportURLLink = report.ReportUrlLink,
-                               IsActive = report.IsActive
-                           }
-                           )
-                           .Skip((request.Filter.PageParameter.PageNo - 1) * request.Filter.PageParameter.PageSize)
-                           .Take(request.Filter.PageParameter.PageSize)
-                           .OrderBy(c => c.Category).ThenBy(c => c.ReportName).AsQueryable();
 
-            var response = await reports.ToListAsync();
-            return Result.Ok(response);
+            var reportForFilter = this.context.Set<Report>()
+            .Include(r => r.SubCategoryMaster)
+            .OrderBy(c => c.SubCategoryMaster.Name).ThenBy(c => c.ExcelSaveFileName)
+            .AsQueryable();
+            
+            reportForFilter = reportForFilter.ApplyEqualityFilters(request.Filter).ApplyPagination(request.Filter.PageParameter);
+
+            var reports = await reportForFilter.Select(c => new DTO_ReportList
+            {
+                ReportId = c.RowId,
+                ReportName = c.ExcelFileName,
+                Category = c.SubCategoryMaster.Name,
+                ReportURLLink = c.ReportUrlLink,
+                IsActive = c.IsActive
+            }).ToListAsync();
+
+            return Result.Ok(reports);
         }
     }
 }

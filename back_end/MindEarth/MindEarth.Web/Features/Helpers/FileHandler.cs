@@ -9,5 +9,11 @@
                 System.IO.File.Delete(filePath);
             }
         }
+
+        public static bool IsFileAvailable(string folderFilePath)
+        {
+            var filePath = $"{Directory.GetCurrentDirectory()}\\uploaddata\\{folderFilePath}";
+            return System.IO.File.Exists(filePath);
+        }
     }
 }

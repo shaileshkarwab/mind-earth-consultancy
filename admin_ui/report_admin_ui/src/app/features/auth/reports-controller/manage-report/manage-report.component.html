@@ -2,69 +2,168 @@
     <app-tool-bar [buttons]="buttons" (clickEvent)="clickCommand($event);"></app-tool-bar>
 </div>
 
-<form [formGroup]="reportForm!">
+<form [formGroup]="reportForm!" (ngSubmit)="onSubmit();">
 
     <div class="card mb-6">
         <div class="card-body">
-            <div class="row">
-                <div class="col-4">
-                    <app-label>Category</app-label>
-                    <select class="form form-control form-control-sm form-select" formControlName="subCategoryMasterId">
-                        <option value="">Select valid category</option>
-                        <option *ngFor="let opt of roles$|async" [value]="opt.rowId">
-                            {{opt.value}}
-                        </option>
-                    </select>
-                    <app-error-handler [control]="reportForm.get('subCategoryMasterId')"
-                        fieldName="Report Category"></app-error-handler>
-                </div>
-                <div class="col-8">
-                    <app-label>Report URL</app-label>
-                    <input type="text" class="form form-control form-control-sm" formControlName="reportUrlLink">
-                    <app-error-handler [control]="reportForm.get('reportUrlLink')"
-                        fieldName="Report URL"></app-error-handler>
-                </div>
-            </div>
-
-            <div class="row mt-2">
-                <div class="col-4">
-                    <app-label>Upload Excel File</app-label>
-                    <input type="file" class="form form-control form-control-sm" (change)="onFileSelected($event)">
-                </div>
-                <div class="col-3 mt-4">
-                    <button type="button" class="btn btn-md btn-primary" (click)="uploadFileCommand();">
-                        <i class="bx bx-upload me-2"></i>Upload File & Save
-                    </button>
-                </div>
-                <div class="col-3 mt-4">
-                    <label>File Name</label>
-                    <section>
-                        <label>{{ reportForm.get('excelFileName')?.value }}</label>
-                    </section>
-                </div>
-                <div class="col-2 mt-6">
-                    <label>
-                        <a href="javascript:void(0)">Download File</a>
-                    </label>
-                </div>
-            </div>
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                <li [ngbNavItem]="1">
+                    <button ngbNavLink>Report Desc & SEO</button>
+                    <ng-template ngbNavContent>
+                        <div class="card mb-6">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <app-label>Category</app-label>
+                                        <select class="form form-control form-control-sm form-select"
+                                            formControlName="subCategoryMasterId">
+                                            <option value="">Select valid category</option>
+                                            <option *ngFor="let opt of roles$|async" [value]="opt.rowId">
+                                                {{opt.value}}
+                                            </option>
+                                        </select>
+                                        <app-error-handler [control]="reportForm.get('subCategoryMasterId')"
+                                            fieldName="Report Category"></app-error-handler>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <app-label>Upload Excel File</app-label>
+                                                <div class="input-group">
+                                                    <input type="file" class="form-control form-control-sm"
+                                                        id="inputGroupFile02" (change)="onFileSelected($event)">
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-primary input-group-text me-2"
+                                                        (click)="uploadExcelFile();">Upload</button>
+                                                    <button type="button" href="javascript:void(0);"
+                                                        class="btn btn-sm btn-primary input-group-text me-2">Download
+                                                        File</button>
+                                                </div>
+                                            </div>
 
 
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+
+                                    <div class="col-12">
+                                        <app-label>Report URL</app-label>
+                                        <input type="text" class="form form-control form-control-sm"
+                                            formControlName="reportUrlLink">
+                                        <app-error-handler [control]="reportForm.get('reportUrlLink')"
+                                            fieldName="Report URL"></app-error-handler>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-12 mt-2">
+                                        <app-label>Report Title</app-label>
+                                        <input class="form form-control form-control-sm" formControlName="reportTitle">
+                                        <app-error-handler [control]="reportForm.get('reportTitle')"
+                                            fieldName="Report Title"></app-error-handler>
+                                    </div>
+
+                                    <div class="col-12 mt-2">
+                                        <app-label>Report Desc</app-label>
+                                        <textarea rows="3" class="form-control form-control-sm"
+                                            formControlName="reportDesc">
+                                        </textarea>
+                                        <app-error-handler [control]="reportForm.get('reportDesc')"
+                                            fieldName="Report Desc"></app-error-handler>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 mt-2">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <app-label>Key Words</app-label>
+                                                <textarea rows="3" class="form-control form-control-sm"
+                                                    formControlName="reportKeyWords">
+                                                        </textarea>
+                                                <app-error-handler [control]="reportForm.get('reportKeyWords')"
+                                                    fieldName="Report Keywords"></app-error-handler>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12 mt-2">
+                                                <app-label>Page Title</app-label>
+                                                <textarea rows="2" class="form-control form-control-sm"
+                                                    formControlName="reportWebPageTitle">
+                                                        </textarea>
+                                                <app-error-handler [control]="reportForm.get('reportWebPageTitle')"
+                                                    fieldName="Report Page Web Title"></app-error-handler>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label>Show On Home Page</label>
+                                                <div class="col-md">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="inlineRadioOptions" id="inlineRadio1" [value]="true"
+                                                            formControlName="showOnHomePage">
+                                                        <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="inlineRadioOptions" id="inlineRadio2" [value]="false"
+                                                            formControlName="showOnHomePage">
+                                                        <label class="form-check-label" for="inlineRadio2">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row m-2">
+                                <div class="col-3">
+                                    <button type="submit" class="btn btn-md btn-primary">
+                                        <i class="{{boxIcons.SAVE}}"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <button ngbNavLink>Images Related to Reports</button>
+                    <ng-template ngbNavContent>
+                        <div class="card mb-6">
+                            <div class="card-header">
+                                <h6 class="card-title">Upload Report Images</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mt-2">
+                                    <div class="col-6 mt-2 mb-2" *ngFor="let image of reportImages; let i = index">
+                                        <app-report-image [reportImage]="image"
+                                            (selectedImage)="selectedImageCommand($event,image);"
+                                            (saveImageEvent)="saveReportImageCommnd(image);"
+                                            (deleteImageEvent)="deleteRportImageCommand($event);"></app-report-image>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
         </div>
     </div>
 
-    <div class="card mb-6">
-        <div class="card-header">
-            <h6 class="card-title" >Upload Report Images</h6>
-        </div>
-        <div class="card-body">
-            <div class="row mt-2">
-                <div class="col-6 mt-2 mb-2" *ngFor="let image of reportImages; let i = index">
-                    <app-report-image [reportImage]="image" (selectedImage)="selectedImageCommand($event,image);"
-                        (saveImageEvent)="saveReportImageCommnd(image);"
-                        (deleteImageEvent)="deleteRportImageCommand($event);"></app-report-image>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+
+
 </form>

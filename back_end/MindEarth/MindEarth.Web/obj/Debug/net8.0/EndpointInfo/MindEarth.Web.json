@@ -270,6 +270,18 @@
         }
       }
     },
+    "/api/Category/v2": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Category": {
       "post": {
         "tags": [
@@ -525,6 +537,59 @@
         }
       }
     },
+    "/api/Report/v2": {
+      "post": {
+        "tags": [
+          "Report"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Filter"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Filter"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Filter"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Report/v2/{reportUrl}": {
+      "get": {
+        "tags": [
+          "Report"
+        ],
+        "parameters": [
+          {
+            "name": "reportUrl",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Report": {
       "post": {
         "tags": [
@@ -728,6 +793,28 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Report/get-images-meta-data/{fileName}": {
+      "get": {
+        "tags": [
+          "Report"
+        ],
+        "parameters": [
+          {
+            "name": "fileName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -1007,12 +1094,16 @@
       "BoolFilter": {
         "type": "object",
         "properties": {
-          "value": {
-            "type": "boolean"
-          },
           "entity": {
             "type": "string",
             "nullable": true
+          },
+          "filterColumn": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1156,6 +1247,30 @@
             "type": "string",
             "nullable": true
           },
+          "reportTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "reportDesc": {
+            "type": "string",
+            "nullable": true
+          },
+          "reportWebImage": {
+            "type": "string",
+            "nullable": true
+          },
+          "reportKeyWords": {
+            "type": "string",
+            "nullable": true
+          },
+          "reportWebPageTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "showOnHomePage": {
+            "type": "boolean",
+            "nullable": true
+          },
           "images": {
             "type": "array",
             "items": {
@@ -1186,6 +1301,13 @@
             "nullable": true
           },
           "rowId": {
+            "type": "string",
+            "nullable": true
+          },
+          "isImageAvailable": {
+            "type": "boolean"
+          },
+          "imageFullPath": {
             "type": "string",
             "nullable": true
           }
@@ -1292,6 +1414,10 @@
           },
           "isActive": {
             "type": "boolean"
+          },
+          "subCategoryListUrl": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1343,11 +1469,15 @@
       "EqualityFilter": {
         "type": "object",
         "properties": {
-          "value": {
+          "entity": {
             "type": "string",
             "nullable": true
           },
-          "entity": {
+          "filterColumn": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
             "type": "string",
             "nullable": true
           }

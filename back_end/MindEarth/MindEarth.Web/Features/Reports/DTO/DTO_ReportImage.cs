@@ -8,6 +8,9 @@
         public string SavedImageName { get; set; }
 
         public string RowId { get; set; }
+
+        public bool IsImageAvailable { get; set; }
+        public string ImageFullPath { get; set; }
     }
 
     public class DTO_CreateReportReponse

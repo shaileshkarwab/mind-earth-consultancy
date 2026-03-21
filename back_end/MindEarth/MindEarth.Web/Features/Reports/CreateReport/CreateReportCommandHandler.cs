@@ -43,7 +43,13 @@ namespace MindEarth.Web.Features.Reports.CreateReport
                 IsActive = true,
                 UpdatedAt = userCommonService.TrasnDateTime,
                 UpdatedBy = userCommonService.UserId,
-                RowId = rowID
+                RowId = rowID,
+                ReportDesc = request.Report.ReportDesc,
+                ReportTitle = request.Report.ReportTitle,
+                ReportWebImage = string.IsNullOrEmpty(request.Report.ReportWebImage) ? string.Empty : request.Report.ReportWebImage,
+                ReportKeyWords = request.Report.ReportKeyWords,
+                ReportWebPageTitle = request.Report.ReportWebPageTitle,
+                ShowOnHomePage = request.Report.ShowOnHomePage.Value
             };
 
 
@@ -106,7 +112,5 @@ namespace MindEarth.Web.Features.Reports.CreateReport
                 Images = images
             });
         }
-
-        
     }
 }
