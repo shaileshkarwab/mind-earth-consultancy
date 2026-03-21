@@ -5,3 +5,6 @@
 /back_end/MindEarth/MindEarth.Database/bin/Debug/net8.0
 /back_end/MindEarth/MindEarth.Web/bin/Debug/net8.0
 /back_end/MindEarth/MindEarth.Database/obj
+/next-js-front-end/node_modules
+/next-js-front-end/.next
+/next-js-front-end/.vscode
