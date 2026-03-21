@@ -28,6 +28,12 @@ export const GREEN = BRAND_GREEN;
 export const DARK = TEXT_DARK;
 export const GRAY = TEXT_BODY;
 
+export const FOOTER_SECTION = {
+  mx: 0,
+  // borderRadius: '10px',
+  overflow: 'hidden',
+} as const;
+
 export const SECTION_SHELL = {
   mx: { xs: 1.5, sm: 2.5, md: 3 },
   borderRadius: '10px',
