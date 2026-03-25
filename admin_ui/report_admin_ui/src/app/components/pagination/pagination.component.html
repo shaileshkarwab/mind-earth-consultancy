@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-10">
+        <ngb-pagination [collectionSize]="pagination?.TotalRecords!" [(page)]="pagination!.CurrentPage!"
+            [maxSize]="pagination?.PageSize!" [boundaryLinks]="true" (pageChange)="pageChange($event);" />
+    </div>
+    <div class="col-2">
+        <select class="form form-control form-control-sm form-select" name="page" [(ngModel)]="pagination!.PageSize" (change)="pageSizeChangeEvent();" >
+            <option *ngFor="let size of pageSizes" [ngValue]="size">
+                {{size}}
+            </option>
+        </select>
+    </div>
+</div>

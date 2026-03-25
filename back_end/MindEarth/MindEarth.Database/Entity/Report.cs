@@ -27,6 +27,22 @@ public partial class Report
 
     public int SubCategoryMasterId { get; set; }
 
+    public string? ReportTitle { get; set; }
+
+    public string? ReportDesc { get; set; }
+
+    public string? ReportWebImage { get; set; }
+
+    public string? ReportKeyWords { get; set; }
+
+    public string? ReportWebPageTitle { get; set; }
+
+    public bool ShowOnHomePage { get; set; }
+
+    public DateOnly? PublishedDate { get; set; }
+
+    public decimal? PriceInUsd { get; set; }
+
     public virtual User CreatedByNavigation { get; set; } = null!;
 
     public virtual ICollection<ReportImage> ReportImages { get; set; } = new List<ReportImage>();

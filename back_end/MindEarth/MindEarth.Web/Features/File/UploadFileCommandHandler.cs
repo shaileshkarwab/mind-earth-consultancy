@@ -1,18 +1,19 @@
 ﻿using FluentResults;
 using MediatR;
 using MindEarth.Web.Errors;
+using MindEarth.Web.Features.Services;
 
 namespace MindEarth.Web.Features.File
 {
     public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, Result<string>>
     {
         private readonly IWebHostEnvironment _env;
-        private readonly IConfiguration _configuration;
+        private readonly IConfigParamService _configuration;
         private readonly String[] validFileExtensions;
-        public UploadFileCommandHandler(IWebHostEnvironment env, IConfiguration configuration) { 
+        public UploadFileCommandHandler(IWebHostEnvironment env, IConfigParamService configuration) { 
             _env = env;
             _configuration = configuration;
-            validFileExtensions = _configuration.GetSection("AppSettings:ValidFileExtensions").Get<string[]>();
+            validFileExtensions = _configuration.ValidFileExtensions();
         }
         public async Task<Result<string>> Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {

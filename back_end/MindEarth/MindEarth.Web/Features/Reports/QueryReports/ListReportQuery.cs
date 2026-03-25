@@ -8,4 +8,6 @@ namespace MindEarth.Web.Features.Reports.QueryReports
     public record ListReportQuery(Filter Filter) : IRequest<Result<List<DTO_ReportList>>>;
 
     public record ReteriveReportQuery(string reportId) : IRequest<Result<DTO_Report>>;
+
+    public record ListReportQueryForExternal(Filter Filter) : IRequest<Result<List<DTO_ReportExternal>>>;
 }

@@ -338,3 +338,4 @@ D:\shailesh\mind_earth_consultancy\code\back_end\MindEarth\MindEarth.Web\bin\Deb
 D:\shailesh\mind_earth_consultancy\code\back_end\MindEarth\MindEarth.Web\bin\Debug\net8.0\RBush.dll
 D:\shailesh\mind_earth_consultancy\code\back_end\MindEarth\MindEarth.Web\bin\Debug\net8.0\SixLabors.Fonts.dll
 D:\shailesh\mind_earth_consultancy\code\back_end\MindEarth\MindEarth.Web\bin\Debug\net8.0\System.IO.Packaging.dll
+D:\shailesh\mind_earth_consultancy\code\back_end\MindEarth\MindEarth.Web\obj\Debug\net8.0\MindEarth.Web.sourcelink.json

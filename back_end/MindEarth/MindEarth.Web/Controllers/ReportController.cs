@@ -78,5 +78,12 @@ namespace MindEarth.Web.Controllers
             var response = await this.mediator.Send(new UpdateReportCommand(reportId, report));
             return response.ToActionResult();
         }
+
+        [HttpGet("get-images-meta-data/{fileName}")]
+        public async Task<IActionResult> GetImagesAndMetaData([FromRoute]string fileName)
+        {
+            var response = await this.mediator.Send(new ImageAndMetaDataQuery(fileName));
+            return response.ToActionResult();
+        }
     }
 }

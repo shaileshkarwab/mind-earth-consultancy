@@ -8,4 +8,10 @@ export class DtoReport {
     isActive?: boolean;
     categoryId?:string;
     images?:Array<DtoReportImage>=[];
+    reportTitle?:string;
+    reportDesc?:string;
+    reportWebImage?:string;
+    reportKeyWords?:string;
+    reportWebPageTitle?:string;
+    showOnHomePage?:boolean;
 }

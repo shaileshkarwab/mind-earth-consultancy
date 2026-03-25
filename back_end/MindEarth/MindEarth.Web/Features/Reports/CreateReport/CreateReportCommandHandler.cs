@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MindEarth.Database.Entity;
 using MindEarth.Web.Errors;
+using MindEarth.Web.Features.Helpers;
 using MindEarth.Web.Features.Reports.DTO;
 using MindEarth.Web.Features.Reports.ReportService;
 using MindEarth.Web.Features.Services;
@@ -31,6 +32,15 @@ namespace MindEarth.Web.Features.Reports.CreateReport
             {
                 return Result.Fail(new BadRequestError());
             }
+
+            //check if the report title is alreay present
+            var reportExists = await this.genericIDService.GetAnyAsync<Report>(c => c.ReportUrlLink == request.Report.ReportUrlLink);
+            if(reportExists)
+            {
+                return Result.Fail(new ValidationError($"{request.Report.ReportUrlLink} already exists"));
+            }
+
+
             var rowID = Ulid.NewUlid().ToString();
             var report = new Report
             {
@@ -43,7 +53,15 @@ namespace MindEarth.Web.Features.Reports.CreateReport
                 IsActive = true,
                 UpdatedAt = userCommonService.TrasnDateTime,
                 UpdatedBy = userCommonService.UserId,
-                RowId = rowID
+                RowId = rowID,
+                ReportDesc = request.Report.ReportDesc,
+                ReportTitle = request.Report.ReportTitle,
+                ReportWebImage = string.IsNullOrEmpty(request.Report.ReportWebImage) ? string.Empty : request.Report.ReportWebImage,
+                ReportKeyWords = request.Report.ReportKeyWords,
+                ReportWebPageTitle = request.Report.ReportWebPageTitle,
+                ShowOnHomePage = request.Report.ShowOnHomePage.Value,
+                PublishedDate = DateTimeHelper.ConvertDateStringToDate(request.Report.PublishedDate),
+                PriceInUsd = request.Report.PriceInUsd
             };
 
 
@@ -106,7 +124,5 @@ namespace MindEarth.Web.Features.Reports.CreateReport
                 Images = images
             });
         }
-
-        
     }
 }

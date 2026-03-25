@@ -5,6 +5,7 @@ using MindEarth.Database.Entity;
 using MindEarth.Web.Errors;
 using MindEarth.Web.Features.CaseStudyAndWhitePappers.DTO;
 using MindEarth.Web.Features.Helpers;
+using MindEarth.Web.Features.Services;
 
 namespace MindEarth.Web.Features.CaseStudyAndWhitePappers.ReteriveCaseStudyWhitePapper
 {
@@ -12,14 +13,14 @@ namespace MindEarth.Web.Features.CaseStudyAndWhitePappers.ReteriveCaseStudyWhite
     public class CaseStudyWhitePapperQueryByRowIdHandler : IRequestHandler<CaseStudyWhitePapperQueryByRowId, Result<DTO_ManageCaseStudyWhitePaper>>
     {
         private readonly MindEarthContext mindEarthContext;
-        private readonly IConfiguration configuration;
+        private readonly IConfigParamService configuration;
         private readonly string documentPath;
         const string folderPath = "case-study-white-paper";
-        public CaseStudyWhitePapperQueryByRowIdHandler(MindEarthContext mindEarthContext, IConfiguration configuration)
+        public CaseStudyWhitePapperQueryByRowIdHandler(MindEarthContext mindEarthContext, IConfigParamService configuration)
         {
             this.mindEarthContext = mindEarthContext;
             this.configuration = configuration;
-            this.documentPath = $"{configuration.GetSection("AppSettings:WebPath").Get<string>()}/{folderPath}";
+            this.documentPath = $"{configuration.GetWebPath()}/{folderPath}";
         }
 
         public async Task<Result<DTO_ManageCaseStudyWhitePaper>> Handle(CaseStudyWhitePapperQueryByRowId request, CancellationToken cancellationToken)

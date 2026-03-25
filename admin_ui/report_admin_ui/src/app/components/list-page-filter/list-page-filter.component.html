@@ -1,0 +1,50 @@
+<form *ngIf="filterForm" [formGroup]="filterForm" (ngSubmit)="searchCommand();" >
+    <div class="card ">
+        <div class="card-header">
+            <h6 class="card-title">Filter</h6>
+            <button (click)="toggleFilter();" type="button" class="btn btn-sm btn-primary me-2">
+                {{ !hidefilter ? 'Hide Filter' : 'Show Filter' }}
+            </button>
+            <button (click)="clearFilter();" type="button" class="btn btn-sm btn-primary me-2">
+                Clear Filter
+            </button>
+        </div>
+        <div class="card-body" *ngIf="!hidefilter">
+            <div class="row mt-2" *ngFor="let row of filterUI.rows">
+                <div *ngFor="let col of row.columns" class="{{col.colSize}}">
+                    <div *ngFor="let ip of col.fields">
+                        <ng-container *ngIf="ip.type ==='text'">
+                            <label>{{ip.label}}</label>
+                            <input type="text" [formControlName]="ip.name!" class="{{ip.class}}">
+                        </ng-container>
+
+
+                        <ng-container *ngIf="ip.type ==='date'">
+                            <label>{{ip.label}}</label>
+                            <app-date-picker [formControlName]="ip.name!"></app-date-picker>
+                        </ng-container>
+
+                        <ng-container *ngIf="ip.type ==='dropDown'">
+                            <label>{{ip.label}}</label>
+                            <app-select-drop-down [serviceName]="ip.serviceName"
+                                [placeHolder]="ip.placeHolder" [formControlName]="ip.name!" ></app-select-drop-down>
+                        </ng-container>
+
+                        <ng-container *ngIf="ip.type ==='checkbox'">
+                            <label>{{ip.label}}</label>
+                            <input type="checkbox" [formControlName]="ip.name!" class="{{ip.class}}">
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12 text-end">
+                    <button class="btn btn-sm btn-primary">
+                        <i class="{{boxIcons.SEARCH}}"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

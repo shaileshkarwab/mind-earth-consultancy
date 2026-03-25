@@ -11,10 +11,12 @@ namespace MindEarth.Web.Features.CategorySubcategory.Command.UpdateCategory
     {
         private readonly MindEarthContext context;
         private readonly IUserCommonService userCommonService;
-        public UpdateCategoryCommandHandler(MindEarthContext context, IUserCommonService userCommonService)
+        private readonly IGenericIDService genericIDService;
+        public UpdateCategoryCommandHandler(MindEarthContext context, IUserCommonService userCommonService, IGenericIDService genericIDService)
         {
             this.context = context;
             this.userCommonService = userCommonService;
+            this.genericIDService = genericIDService;
         }
         public async Task<Result<string>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
@@ -35,20 +37,22 @@ namespace MindEarth.Web.Features.CategorySubcategory.Command.UpdateCategory
 
             foreach (var sub in request.CategoryUpdateDto.SubCategories)
             {
+                //check if the sub category url exists
+                var result = await this.genericIDService.GetAnyAsync<SubCategory>(c => c.SubCategoryListUrl == sub.SubCategoryListUrl && c.RowId != sub.RowId);
+                if(result)
+                {
+                    return Result.Fail(new ValidationError($"The subcategory URL {sub.SubCategoryListUrl} already exists"));
+                }
                 // if row id is not null then update
                 if (!string.IsNullOrEmpty(sub.RowId))
                 {
                     var subCategory = category.SubCategories.SingleOrDefault(c => c.RowId == sub.RowId);
-                    if (subCategory == null)
-                    {
-                        return Result.Fail(new NoDataFound());
-                    }
-
                     subCategory.SeqNo = sub.SeqNo;
                     subCategory.Name = sub.Name;
                     subCategory.IsActive = sub.IsActive;
                     subCategory.UpdatedAt = userCommonService.TrasnDateTime;
                     subCategory.UpdatedBy = userCommonService.UserId;
+                    subCategory.SubCategoryListUrl = sub.SubCategoryListUrl;
                 }
                 else {
                     category.SubCategories.Add(new SubCategory { 
@@ -59,7 +63,8 @@ namespace MindEarth.Web.Features.CategorySubcategory.Command.UpdateCategory
                         CreatedAt = userCommonService.TrasnDateTime,
                         CreatedBy = userCommonService.UserId,
                         UpdatedAt = userCommonService.TrasnDateTime,
-                        UpdatedBy = userCommonService.UserId
+                        UpdatedBy = userCommonService.UserId,
+                        SubCategoryListUrl = sub.SubCategoryListUrl
                     });
                 }
             }

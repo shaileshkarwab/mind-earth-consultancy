@@ -255,11 +255,31 @@ public partial class MindEarthContext : DbContext
             entity.Property(e => e.IsActive)
                 .HasDefaultValue(true)
                 .HasColumnName("is_active");
+            entity.Property(e => e.PriceInUsd)
+                .HasColumnType("money")
+                .HasColumnName("price_in_usd");
+            entity.Property(e => e.PublishedDate).HasColumnName("published_date");
+            entity.Property(e => e.ReportDesc).HasColumnName("report_desc");
+            entity.Property(e => e.ReportKeyWords)
+                .HasMaxLength(1000)
+                .HasColumnName("report_key_words");
+            entity.Property(e => e.ReportTitle)
+                .HasMaxLength(1000)
+                .HasColumnName("report_title");
             entity.Property(e => e.ReportUrlLink).HasColumnName("report_url_link");
+            entity.Property(e => e.ReportWebImage)
+                .HasMaxLength(256)
+                .HasColumnName("report_web_image");
+            entity.Property(e => e.ReportWebPageTitle)
+                .HasMaxLength(1000)
+                .HasColumnName("report_web_page_title");
             entity.Property(e => e.RowId)
                 .HasMaxLength(26)
                 .IsFixedLength()
                 .HasColumnName("row_id");
+            entity.Property(e => e.ShowOnHomePage)
+                .HasDefaultValue(false)
+                .HasColumnName("show_on_home_page");
             entity.Property(e => e.SubCategoryMasterId).HasColumnName("sub_category_master_id");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("(now() AT TIME ZONE 'UTC'::text)")
@@ -475,6 +495,8 @@ public partial class MindEarthContext : DbContext
 
             entity.HasIndex(e => e.Name, "IDX_SUB_CATEGORY_NAME");
 
+            entity.HasIndex(e => e.SubCategoryListUrl, "UK_SUB_CATEGORY_LIST_URL").IsUnique();
+
             entity.HasIndex(e => new { e.Name, e.CategoryId }, "UK_SUB_CATEGORY_NAME_CATEGORY_ID").IsUnique();
 
             entity.HasIndex(e => e.RowId, "UK_SUB_CATEGORY_ROW_ID").IsUnique();
@@ -500,6 +522,7 @@ public partial class MindEarthContext : DbContext
             entity.Property(e => e.SeqNo)
                 .HasDefaultValue(1)
                 .HasColumnName("seq_no");
+            entity.Property(e => e.SubCategoryListUrl).HasColumnName("sub_category_list_url");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("(now() AT TIME ZONE 'UTC'::text)")
                 .HasColumnType("timestamp without time zone")

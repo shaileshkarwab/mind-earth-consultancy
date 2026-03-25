@@ -10,6 +10,13 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-12">
+                <app-list-page-filter [json]="'reportfilter.json'" (serachEvent)="searchCommand($event);" ></app-list-page-filter>
+            </div>
+        </div>
+
+
         <div class="row mt-6">
             <div class="col-12">
                 <table class="table table-sm table-bordered">
@@ -19,7 +26,7 @@
                             <th>Category</th>
                             <th>Excel File</th>
                             <th>Report URL</th>
-                            <th>Action</th>
+                            <th style="width: 12vw;" >Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,5 +48,12 @@
                 </table>
             </div>
         </div>
+
+        <div class="row mt-6">
+            <div class="col-12">
+                <app-pagination [pagination]="pagination" (pageChangeEvent)="reportListChangeEvent($event);" ></app-pagination>
+            </div>
+        </div>
+
     </div>
 </div>
