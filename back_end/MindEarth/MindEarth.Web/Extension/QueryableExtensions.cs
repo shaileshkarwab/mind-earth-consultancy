@@ -1,4 +1,5 @@
 ﻿using MindEarth.Web.Common.Models;
+using MindEarth.Web.Features.Helpers;
 using System.Linq.Expressions;
 
 namespace MindEarth.Web.Extension
@@ -130,6 +131,60 @@ namespace MindEarth.Web.Extension
                 }
 
             }
+
+
+            //for date range filters
+            if (filters.DateFilters != null && filters.DateFilters.Count > 0)
+            {
+                foreach (var filter in filters.DateFilters)
+                {
+                    // x.SubCategory.SubCategoryListUrl
+                    Expression property = parameter;
+
+                    //if (!string.IsNullOrEmpty(filter.Entity))
+                    //{
+                    //    property = Expression.PropertyOrField(property, filter.Entity);
+                    //}
+
+
+                    if (!string.IsNullOrEmpty(filter.Entity) && filter.Entity != typeof(T).Name)
+                    {
+                        foreach (var part in filter.Entity.Split('.'))
+                        {
+                            property = Expression.PropertyOrField(property, part);
+                        }
+                    }
+
+                    property = Expression.PropertyOrField(property, filter.FilterColumn);
+                    // Convert value type
+
+                    Type targetType = property.Type;
+                    // unwrap Nullable<T> → decimal
+                    Type underlyingType = Nullable.GetUnderlyingType(targetType) ?? targetType;
+
+                    // convert 2000 → decimal (2000m)
+                    var convertedValue = Convert.ChangeType(DateTimeHelper.ConvertDateStringToDate(filter.Value), underlyingType);
+
+                    // wrap back into decimal?
+                    var constant = Expression.Constant(convertedValue, targetType);
+
+
+                    // x.SubCategory.SubCategoryListUrl == "value"
+                    Expression equality = Expression.Equal(property, constant);
+                    if (filter.RangeType == "FROM")
+                    {
+                        equality = Expression.GreaterThanOrEqual(property, constant);
+                    }
+                    else if (filter.RangeType == "TO")
+                    {
+                        equality = Expression.LessThanOrEqual(property, constant);
+                    }
+                    finalExpression = finalExpression == null ? equality : Expression.AndAlso(finalExpression, equality);
+                }
+
+            }
+
+
 
             if (finalExpression == null)
                 return query;

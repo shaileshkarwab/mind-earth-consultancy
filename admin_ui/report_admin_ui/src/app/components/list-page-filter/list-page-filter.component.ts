@@ -70,6 +70,7 @@ export class ListPageFilterComponent implements OnInit, OnDestroy {
       equalityFilters: [],
       boolFilters: [],
       integerRangeFilters: [],
+      dateFilters: [],
       pageParameter: {
         pageNo: 1,
         pageSize: 10
@@ -103,6 +104,14 @@ export class ListPageFilterComponent implements OnInit, OnDestroy {
                   rangeType: field.datafilter?.range!
                 });
                 break;
+              case "dateRangeFilter":
+                filter.dateFilters?.push({
+                  entity: field.datafilter?.entity!,
+                  filterColumn: field.datafilter?.fieldName!,
+                  value: this.filterForm.get(field.name!)!.value,
+                  rangeType: field.datafilter?.range!
+                });
+                break;
             }
           }
         });
@@ -111,8 +120,7 @@ export class ListPageFilterComponent implements OnInit, OnDestroy {
     this.serachEvent.emit(filter);
   }
 
-  clearFilter()
-  {
+  clearFilter() {
     this.filterForm = this.formbuilder.group({});
     this.createForm();
   }

@@ -63,7 +63,7 @@
                             "datafilter": {
                                 "entity": "Report",
                                 "fieldName": "PriceInUsd",
-                                "range":"FROM"
+                                "range": "FROM"
                             }
                         }
                     ]
@@ -80,7 +80,7 @@
                             "datafilter": {
                                 "entity": "Report",
                                 "fieldName": "PriceInUsd",
-                                "range":"TO"
+                                "range": "TO"
                             }
                         }
                     ]
@@ -93,7 +93,12 @@
                             "label": "Published Date",
                             "name": "publishedDateFrom",
                             "class": "form-control form-control-sm",
-                            "filter": "rangeFilter"
+                            "filter": "dateRangeFilter",
+                            "datafilter": {
+                                "entity": "Report",
+                                "fieldName": "PublishedDate",
+                                "range": "FROM"
+                            }
                         }
                     ]
                 },
@@ -105,8 +110,12 @@
                             "label": "Published Date To",
                             "name": "publishedDateTo",
                             "class": "form-control form-control-sm",
-                            "filter": "rangeFilter"
-                            
+                            "filter": "dateRangeFilter",
+                            "datafilter": {
+                                "entity": "Report",
+                                "fieldName": "PublishedDate",
+                                "range": "TO"
+                            }
                         }
                     ]
                 },
