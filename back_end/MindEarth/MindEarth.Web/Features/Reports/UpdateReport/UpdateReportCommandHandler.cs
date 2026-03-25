@@ -29,6 +29,8 @@ namespace MindEarth.Web.Features.Reports.UpdateReport
         }
         public async Task<Result<DTO_CreateReportReponse>> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
         {
+
+            //checking
             var report = await this.context.Reports.SingleOrDefaultAsync(c => c.RowId == request.reportID && c.IsActive == true);
             if (report == null)
             {
