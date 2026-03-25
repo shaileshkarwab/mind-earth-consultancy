@@ -1,0 +1,132 @@
+{
+    "rows": [
+        {
+            "columns": [
+                {
+                    "colSize": "col-4",
+                    "fields": [
+                        {
+                            "type": "dropDown",
+                            "label": "Categry",
+                            "name": "reportCategory",
+                            "class": "form-control form-control-sm form-select",
+                            "placeHolder": "Select Report Category",
+                            "serviceName": "masterService.getCategories",
+                            "filter": "equlityFilter",
+                            "datafilter": {
+                                "entity": "SubCategoryMaster",
+                                "fieldName": "RowId"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "colSize": "col-8",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "label": "Report Title",
+                            "name": "reportTitle",
+                            "class": "form-control form-control-sm",
+                            "filter": "textFilter"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "columns": [
+                {
+                    "col-size": "col-12",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "label": "Report URL",
+                            "name": "reportURL",
+                            "class": "form-control form-control-sm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "columns": [
+                {
+                    "colSize": "col-2",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "label": "Price From",
+                            "name": "priceFrom",
+                            "class": "form-control form-control-sm",
+                            "filter": "integerRangeFilter",
+                            "datafilter": {
+                                "entity": "Report",
+                                "fieldName": "PriceInUsd",
+                                "range":"FROM"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "colSize": "col-2",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "label": "Price To",
+                            "name": "priceTo",
+                            "class": "form-control form-control-sm",
+                            "filter": "integerRangeFilter",
+                            "datafilter": {
+                                "entity": "Report",
+                                "fieldName": "PriceInUsd",
+                                "range":"TO"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "colSize": "col-3",
+                    "fields": [
+                        {
+                            "type": "date",
+                            "label": "Published Date",
+                            "name": "publishedDateFrom",
+                            "class": "form-control form-control-sm",
+                            "filter": "rangeFilter"
+                        }
+                    ]
+                },
+                {
+                    "colSize": "col-3",
+                    "fields": [
+                        {
+                            "type": "date",
+                            "label": "Published Date To",
+                            "name": "publishedDateTo",
+                            "class": "form-control form-control-sm",
+                            "filter": "rangeFilter"
+                            
+                        }
+                    ]
+                },
+                {
+                    "colSize": "col-2",
+                    "fields": [
+                        {
+                            "type": "checkbox",
+                            "label": "Home Page",
+                            "name": "reportsForHomePage",
+                            "class": "ms-2",
+                            "filter": "booleanFilter",
+                            "datafilter": {
+                                "entity": "Report",
+                                "fieldName": "ShowOnHomePage"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

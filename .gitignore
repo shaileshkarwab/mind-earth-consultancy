@@ -2,7 +2,7 @@
 /admin_ui/report_admin_ui/.angular
 /admin_ui/report_admin_ui/.vscode
 /back_end/MindEarth/.vs
-/back_end/MindEarth/MindEarth.Database/bin/Debug/net8.0
+/back_end/MindEarth/MindEarth.Database/bin/Debug/net8.0/
 /back_end/MindEarth/MindEarth.Web/bin/Debug/net8.0
 /back_end/MindEarth/MindEarth.Database/obj
 /back_end/MindEarth/MindEarth.Web/obj/Debug/net8.0/EndpointInfo/MindEarth.Web.json
@@ -27,7 +27,7 @@
 /back_end/MindEarth/MindEarth.Web/obj/
 /back_end/MindEarth/MindEarth.Web/obj/
 /back_end/MindEarth/MindEarth.Web/obj/
-/back_end/MindEarth/MindEarth.Web/obj/Debug/net8.0
+/back_end/MindEarth/MindEarth.Web/obj/Debug/net8.0/
 /back_end/MindEarth/MindEarth.Web/uploaddata/reports
 /back_end/MindEarth/MindEarth.Web/obj/Debug/net8.0/EndpointInfo/MindEarth.Web.json
 /back_end/MindEarth/MindEarth.Web/obj/Debug/net8.0/ref/MindEarth.Web.dll
@@ -74,3 +74,4 @@
 /back_end/MindEarth/MindEarth.Web/obj/Debug/net8.0/ref/MindEarth.Web.dll
 /admin_ui/report_admin_ui/dist/
 *.md
+/back_end/MindEarth/MindEarth.Web/obj/Debug/net8.0/
