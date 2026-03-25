@@ -8,38 +8,38 @@ interface PageProps {
 }
 
 // Generate static params for all reports
-export async function generateStaticParams() {
-  const slugs = getAllSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
+// export async function generateStaticParams() {
+//   const slugs = getAllSlugs();
+//   return slugs.map((slug) => ({ slug }));
+// }
 
 // Dynamic metadata based on slug
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const report = getReportBySlug(slug);
+// export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+//   const { slug } = await params;
+//   const report = getReportBySlug(slug);
+//
+//   if (!report) {
+//     return { title: 'Report Not Found' };
+//   }
+//
+//   return {
+//     title: `${report.title} | ${report.category} Report`,
+//     description: report.description,
+//     openGraph: {
+//       title: `${report.title} - Market Research Report`,
+//       description: report.description,
+//       type: 'article',
+//     },
+//   };
+// }
 
-  if (!report) {
-    return { title: 'Report Not Found' };
-  }
-
-  return {
-    title: `${report.title} | ${report.category} Report`,
-    description: report.description,
-    openGraph: {
-      title: `${report.title} - Market Research Report`,
-      description: report.description,
-      type: 'article',
-    },
-  };
-}
-
-export default async function ReportPage({ params }: PageProps) {
-  const { slug } = await params;
-  const report = getReportBySlug(slug);
-
-  if (!report) {
-    notFound();
-  }
-
-  return <ReportCard report={report} />;
-}
+// export default async function ReportPage({ params }: PageProps) {
+//   const { slug } = await params;
+//   const report = getReportBySlug(slug);
+//
+//   if (!report) {
+//     notFound();
+//   }
+//
+//   return <ReportCard report={report} />;
+// }
