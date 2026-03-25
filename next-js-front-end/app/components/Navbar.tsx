@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Box,
   Container,
@@ -25,6 +25,7 @@ import {
   DropdownItem,
 } from "../page.styles";
 import { categories as reportCategories } from "../data/reports";
+import apis from "../lib/axiosInstance";
 
 // ========================
 // Mega Menu Data
@@ -115,9 +116,25 @@ export default function Navbar() {
   const [reportsMegaOpen, setReportsMegaOpen] = useState(false);
   const [servicesMegaOpen, setServicesMegaOpen] = useState(false);
   const [insightsOpen, setInsightsOpen] = useState(false);
+  const [categories, setCategories] = useState<any[]>([]);
   const reportsTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const servicesTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const insightsTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
+  const getAllCategories = () => {
+    const categories = apis.get("/Category/v2")
+      .then((res) => {
+        console.log("API Response for Categories:", res.data);
+        setCategories(res.data.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching categories:", err);
+      });
+  };
 
   const handleEnter = (
     setter: (v: boolean) => void,
@@ -142,7 +159,7 @@ export default function Navbar() {
       setter(false);
     }, 200);
   };
-
+  // console.log("Fetched Categories:", categories);
   return (
     <>
       {/* Top Bar */}
@@ -262,7 +279,7 @@ export default function Navbar() {
               }}
             >
               <Link href="/" style={{ textDecoration: "none" }}>
-                <NavButton>Home</NavButton>
+                {/* <NavButton>Home</NavButton> */}
               </Link>
 
               {/* Reports mega menu trigger */}
@@ -389,8 +406,8 @@ export default function Navbar() {
                       gap: 3,
                     }}
                   >
-                    {reportCategories.map((category) => (
-                      <Box key={category.categoryName}>
+                    {categories.length > 0 && categories.map((category, index) => (
+                      <Box key={index}>
                         <CategoryHeading>
                           {category.categoryName}
                         </CategoryHeading>
@@ -401,7 +418,7 @@ export default function Navbar() {
                             gap: 0.25,
                           }}
                         >
-                          {category.subCategories.map((item) => (
+                          {category.subCategories.map((item: any) => (
                             <MenuItemLink
                               key={item.subCategoryLink}
                               href={`/reports/subcategory/${item.subCategoryLink}`}
