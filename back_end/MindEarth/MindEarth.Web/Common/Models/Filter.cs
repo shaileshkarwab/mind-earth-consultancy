@@ -40,7 +40,7 @@
     public class DateFilter : BaseFilter
     {
         public string RangeType { get; set; }
-        public DateTime Value { get; set; }
+        public string Value { get; set; }
     }
 
     public class PageParameter

@@ -3,7 +3,8 @@ export interface Filter {
     boolFilters?: BoolFilter[] | null;
     equalityFilters?: EqualityFilter[] | null;
     pageParameter: PageParameter;
-    integerRangeFilters?:IntegerRangeFilters[] | null; 
+    integerRangeFilters?: IntegerRangeFilters[] | null;
+    dateFilters?: DateFilter[] | null;
 }
 
 export interface Criteria {
@@ -14,18 +15,20 @@ export interface Criteria {
 export interface BoolFilter {
     value: boolean;
     entity: string;
-    filterColumn?:string;
+    filterColumn?: string;
 }
 
 export interface EqualityFilter {
     value: string;
     entity: string;
-    filterColumn:string;
+    filterColumn: string;
 }
 
 export interface DateFilter {
     value: string;
     entity: string;
+    filterColumn: string;
+    rangeType?: string;
 }
 
 export interface PageParameter {
@@ -33,12 +36,13 @@ export interface PageParameter {
     pageSize: number;
 }
 
-export interface IntegerRangeFilters
-{
-
+export interface IntegerRangeFilters {
+    value: string;
+    entity: string;
+    filterColumn: string;
+    rangeType?: string;
 }
 
-export interface Datafilter
-{
+export interface Datafilter {
 
 }
