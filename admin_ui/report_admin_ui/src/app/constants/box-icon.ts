@@ -5,5 +5,6 @@ export const BoxIcon =  {
     CLOSE:'icon-base bx bx-x icon-bg',
     EDIT:'icon-base bx bx-edit icon-bg',
     BACK:'icon-base bx bx-left-arrow icon-bg',
-    UPLOAD:'icon-base bx bx-upload icon-bg'
+    UPLOAD:'icon-base bx bx-upload icon-bg',
+    SEARCH:'icon-base bx bx-search icon-bg'
 }

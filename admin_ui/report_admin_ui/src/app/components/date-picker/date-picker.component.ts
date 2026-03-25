@@ -1,26 +1,37 @@
-import { Component, forwardRef, inject, Injectable, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { NgbDateParserFormatter, NgbDatepicker, NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import {
+  Component,
+  forwardRef,
+  Injectable,
+  OnInit
+} from '@angular/core';
+
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule
+} from '@angular/forms';
+
+import {
+  NgbDateParserFormatter,
+  NgbDateStruct,
+  NgbInputDatepicker
+} from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable()
 export class CustomDateParserFormatter extends NgbDateParserFormatter {
   readonly DELIMITER = '-';
 
   parse(value: string): NgbDateStruct | null {
-    if (value) {
-      const date = value.split(this.DELIMITER);
-      return {
-        day: parseInt(date[0], 10),
-        month: parseInt(date[1], 10),
-        year: parseInt(date[2], 10),
-      };
-    }
-    return null;
+    if (!value) return null;
+
+    const [day, month, year] = value.split(this.DELIMITER);
+    return { day: +day, month: +month, year: +year };
   }
 
   format(date: NgbDateStruct | null): string {
     return date
-      ? `${String(date.day).padStart(2, '0')}${this.DELIMITER}${String(date.month).padStart(2, '0')}${this.DELIMITER}${date.year}`
+      ? `${String(date.day).padStart(2, '0')}-${String(date.month).padStart(2, '0')}-${date.year}`
       : '';
   }
 }
@@ -30,69 +41,67 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   standalone: true,
   imports: [NgbInputDatepicker, ReactiveFormsModule],
   templateUrl: './date-picker.component.html',
-  styleUrl: './date-picker.component.css',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => DatePickerComponent),
       multi: true
     },
-    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
   ]
 })
 export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
-  inputDate?: string;
-  form!: FormGroup;
-  fb = inject(FormBuilder);
-  DELIMITER: string = '-';
+  inputDate = new FormControl<NgbDateStruct | null>(null);
+
+  private onChange: (value: string | null) => void = () => {};
+  private onTouched: () => void = () => {};
+
   ngOnInit(): void {
-    this.form = this.fb.group({
-      inputDate: [null]
-    });
+    this.inputDate.valueChanges.subscribe(val => {
+      if (val) {
+        const formatted =
+          String(val.day).padStart(2, '0') + '-' +
+          String(val.month).padStart(2, '0') + '-' +
+          val.year;
 
-    // Example: set date value
-    this.setDate();
-  }
-
-
-  setDate() {
-
-    // Example Date
-    const date = new Date();
-
-    this.form.patchValue({
-      inputDate: {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate()
+        this.onChange(formatted); // ✅ child → parent
+      } else {
+        this.onChange(null);
       }
-    });
 
+      this.onTouched();
+    });
   }
 
-  onChange: (value: string | null) => void = () => { };
-  onTouched: () => void = () => { };
-  writeValue(obj: any): void {
-    if (typeof obj === 'string') {
-      this.inputDate = obj;
+  // ✅ parent → child
+  writeValue(value: any): void {
+    if (!value) {
+      this.inputDate.setValue(null, { emitEvent: false });
+      return;
+    }
+
+    if (typeof value === 'string') {
+      const [day, month, year] = value.split('-');
+
+      this.inputDate.setValue(
+        { day: +day, month: +month, year: +year },
+        { emitEvent: false }
+      );
+    } else {
+      this.inputDate.setValue(value, { emitEvent: false });
     }
   }
+
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
+
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
-  setDisabledState?(isDisabled: boolean): void {
+
+  setDisabledState(isDisabled: boolean): void {
+    isDisabled ? this.inputDate.disable() : this.inputDate.enable();
   }
-
-  format(date: NgbDateStruct | null): string {
-    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
-  }
-
-
 }
-
-
-

@@ -21,6 +21,8 @@ import { ConfirmService } from '../../../../services/confirm.service';
 import { UploadImageComponent } from "../../../../components/upload-image/upload-image.component";
 import { BoxIcon } from '../../../../constants/box-icon';
 import { NgbNav, NgbNavContent, NgbNavItem, NgbNavItemRole, NgbNavLinkBase, NgbNavLinkButton, NgbNavOutlet } from '@ng-bootstrap/ng-bootstrap';
+import { DateTimeHelper } from '../../../../helpers/date-time-helper';
+import { DatePickerComponent } from '../../../../components/date-picker/date-picker.component';
 
 @Component({
   selector: 'app-manage-report',
@@ -31,7 +33,7 @@ import { NgbNav, NgbNavContent, NgbNavItem, NgbNavItemRole, NgbNavLinkBase, NgbN
     NgbNavItemRole,
     NgbNavLinkButton,
     NgbNavLinkBase,
-    NgbNavOutlet, NgIf],
+    NgbNavOutlet, NgIf, DatePickerComponent],
   templateUrl: './manage-report.component.html',
   styleUrl: './manage-report.component.css'
 })
@@ -54,6 +56,7 @@ export class ManageReportComponent implements OnInit {
   webImageFile!: File;
   readonly uploadFolderPath: string = "reports";
   active: number = 1;
+  todaysDate = new Date();
   ngOnInit(): void {
     this.buttons.push(ButtonConstants.BackButton());
 
@@ -114,7 +117,7 @@ export class ManageReportComponent implements OnInit {
 
   buildForm() {
     this.reportForm = this.formBuilder.group({
-      reportUrlLink: [, [Validators.required, Validators.minLength(8),Validators.pattern(/^[^\s&]+$/)]],
+      reportUrlLink: [, [Validators.required, Validators.minLength(8), Validators.pattern(/^[^\s&]+$/)]],
       isActive: [true],
       rowId: [null],
       excelSaveFileName: [null],
@@ -125,7 +128,9 @@ export class ManageReportComponent implements OnInit {
       reportWebImage: [null],
       reportKeyWords: ['', Validators.required],
       reportWebPageTitle: ['', Validators.required],
-      showOnHomePage: ["false"]
+      showOnHomePage: ["false"],
+      publishedDate: [DateTimeHelper.formatDateTo_DDmmYYY(this.todaysDate), [Validators.required]],
+      priceInUsd: [null, [Validators.required]]
     });
   }
 
@@ -149,7 +154,9 @@ export class ManageReportComponent implements OnInit {
       excelSaveFileName: data.excelSaveFileName,
       reportKeyWords: data.reportKeyWords,
       reportWebPageTitle: data.reportWebPageTitle,
-      showOnHomePage: data.showOnHomePage
+      showOnHomePage: data.showOnHomePage,
+      publishedDate: data.publishedDate,
+      priceInUsd: data.priceInUsd
     });
   }
 
@@ -293,7 +300,9 @@ export class ManageReportComponent implements OnInit {
       reportWebImage: '',
       reportKeyWords: this.reportForm.get('reportKeyWords')?.value,
       reportWebPageTitle: this.reportForm.get('reportWebPageTitle')?.value,
-      showOnHomePage: this.reportForm.get('showOnHomePage')?.value
+      showOnHomePage: this.reportForm.get('showOnHomePage')?.value,
+      publishedDate: this.reportForm.get('publishedDate')?.value,
+      priceInUsd: this.reportForm.get('priceInUsd')?.value,
     };
     return dto;
   }

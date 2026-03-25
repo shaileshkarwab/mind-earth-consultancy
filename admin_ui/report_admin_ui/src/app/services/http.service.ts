@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response.model';
@@ -36,6 +36,33 @@ export class HttpService {
       .get<ApiResponse<T>>(url, options)
       .pipe(map(response => new ApiResponse(response)));
   }
+
+  /**
+   * POST request
+   * @param endpoint API endpoint
+   * @param body Request body
+   * @param options HTTP options
+   * @returns Observable of ApiResponse
+   */
+  postWithResponse<T = any>(
+    endpoint: string,
+    body: any,
+    options?: HttpOptions
+  ): Observable<HttpResponse<ApiResponse<T>>> {
+    const url = this.buildUrl(endpoint);
+
+    const httpOptions = {
+      ...options,
+      observe: 'response' as const
+    };
+
+    return this.httpClient
+      .post<ApiResponse<T>>(url, body, httpOptions)
+      .pipe(
+        map(res => res.clone({ body: new ApiResponse<T>(res.body!) }))
+      );
+  }
+
 
   /**
    * POST request

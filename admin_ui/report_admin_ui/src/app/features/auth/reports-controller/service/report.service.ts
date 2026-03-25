@@ -8,6 +8,7 @@ import { DtoReportImage, DtoSaveReportResonse } from '../models/dto-report-image
 import { Filter } from '../../../../models/filter';
 import { DtoReportList } from '../models/dto-report-list';
 import { DtoMetaDataResponse } from '../models/dto-meta-data-response';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,8 @@ export class ReportService {
     return this.httpService.put(`${UrlConstants.UPDATE_REPORT}/${reportID}`, updateEntity);
   }
 
-  getReports(filterAndPaging: Filter): Observable<ApiResponse<Array<DtoReportList>>> {
-    return this.httpService.post(`${UrlConstants.LIST_REPORT}`, filterAndPaging);
+  getReports(filterAndPaging: Filter): Observable<HttpResponse<ApiResponse<Array<DtoReportList>>>> {
+    return this.httpService.postWithResponse(`${UrlConstants.LIST_REPORT}`, filterAndPaging);
   }
 
   deleteReport(reportId: string): Observable<ApiResponse<boolean>> {

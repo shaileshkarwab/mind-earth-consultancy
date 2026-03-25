@@ -11,11 +11,14 @@ import { DtoReportList } from '../models/dto-report-list';
 import { AsyncPipe, NgFor } from '@angular/common';
 import { BoxIcon } from '../../../../constants/box-icon';
 import { ConfirmService } from '../../../../services/confirm.service';
+import { ListPageFilterComponent } from "../../../../components/list-page-filter/list-page-filter.component";
+import { PaginationComponent } from "../../../../components/pagination/pagination.component";
+import { PaginationMeta } from '../../../../models/pagination-meta';
 
 @Component({
   selector: 'app-list-of-reports',
   standalone: true,
-  imports: [ToolBarComponent, NgFor, AsyncPipe],
+  imports: [ToolBarComponent, NgFor, AsyncPipe, ListPageFilterComponent, PaginationComponent],
   templateUrl: './list-of-reports.component.html',
   styleUrl: './list-of-reports.component.css'
 })
@@ -33,13 +36,17 @@ export class ListOfReportsComponent implements OnInit {
   listOfReports$!: Observable<Array<DtoReportList>>
   boxIcons = BoxIcon;
   confirmService = inject(ConfirmService);
+  pagination: PaginationMeta={
+    CurrentPage:1,
+    PageSize:10,
+  };
   ngOnInit(): void {
     this.buttons.push(ButtonConstants.AddButton());
 
     this.getListOfReports();
 
 
-    
+
 
   }
   clickCommand(buttonKey: ToolBarAction) {
@@ -50,8 +57,15 @@ export class ListOfReportsComponent implements OnInit {
   }
 
   getListOfReports() {
-    this.listOfReports$ = this.reportService.getReports(this.filterAndPaging)
-      .pipe(map(respone => respone.data));
+    this.listOfReports$ = this.reportService
+      .getReports(this.filterAndPaging)
+      .pipe(
+        map(response => {
+          const data = response.body?.data ?? [];
+          this.pagination = JSON.parse(response.headers.get('X-PAGINATION')!);
+          return data;
+        })
+      );
   }
 
   editCommand(reportId: string) {
@@ -79,5 +93,12 @@ export class ListOfReportsComponent implements OnInit {
       });
   }
 
+  searchCommand(filter: Filter) {
+    this.filterAndPaging = filter;
+    this.getListOfReports();
+  }
 
+  reportListChangeEvent(pageData: any) {
+
+  }
 }

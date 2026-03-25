@@ -14,4 +14,6 @@ export class DtoReport {
     reportKeyWords?:string;
     reportWebPageTitle?:string;
     showOnHomePage?:boolean;
+    publishedDate?:string;
+    priceInUsd?:number;
 }
