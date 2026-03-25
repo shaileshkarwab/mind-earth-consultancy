@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using MindEarth.Database.Entity;
+using MindEarth.Web.Extension;
+using MindEarth.Web.Features.DTO;
 
 namespace MindEarth.Web.Features.CategorySubcategory.Query
 {
@@ -15,7 +17,9 @@ namespace MindEarth.Web.Features.CategorySubcategory.Query
         }
         public async Task<Result<List<DTO_SearchCategoryResponse>>> Handle(SearchQuery request, CancellationToken cancellationToken)
         {
-            var categoryQuery = context.Categories.AsQueryable();
+            PaginationMeta meta;
+            var categoryQuery = context.Categories.AsQueryable().ApplyEqualityFilters(request.Filter);
+            categoryQuery = categoryQuery.ApplyPagination(request.Filter.PageParameter,out meta);
             var categoryQueryResponse = await categoryQuery.Select(c => new DTO_SearchCategoryResponse
             {
                 IsActive = c.IsActive,

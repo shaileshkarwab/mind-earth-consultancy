@@ -19,6 +19,7 @@
     {
         public string Value { get; set; } = null!;
         public string Entity { get; set; } = null!;
+        public string FilterColumn { get; set; } = string.Empty;
     }
 
 

@@ -1,6 +1,14 @@
 <div class="card-body mb-6">
     <app-tool-bar [buttons]="buttons" (clickEvent)="clickCommand($event);"></app-tool-bar>
 </div>
+
+<div class="row">
+    <div class="col-12">
+        <app-list-page-filter [json]="'category-filter.json'"
+            (serachEvent)="searchCommand($event);"></app-list-page-filter>
+    </div>
+</div>
+
 <div class="card mb-6">
     <div class="card-body">
 
