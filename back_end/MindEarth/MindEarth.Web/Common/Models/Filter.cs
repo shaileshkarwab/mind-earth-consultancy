@@ -9,6 +9,10 @@
 
         public PageParameter PageParameter { get; set; } = null!;
 
+        public List<DateFilter>? DateFilters { get; set; } = null;
+
+        public List<NumberRageFilter<Int32>>? IntegerRangeFilters { get; set; } = null;
+
     }
 
     public class Criteria
@@ -35,6 +39,7 @@
 
     public class DateFilter : BaseFilter
     {
+        public string RangeType { get; set; }
         public DateTime Value { get; set; }
     }
 
@@ -42,5 +47,11 @@
     {
         public Int32 PageNo { get; set; }
         public Int32 PageSize { get; set; }
+    }
+
+    public class NumberRageFilter<T> : BaseFilter
+    {
+        public string RangeType { get; set; }
+        public T Value { get; set; }
     }
 }

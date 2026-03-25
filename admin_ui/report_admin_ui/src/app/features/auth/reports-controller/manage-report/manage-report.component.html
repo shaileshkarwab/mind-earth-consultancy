@@ -108,20 +108,32 @@
                                                 <label>Show On Home Page</label>
                                                 <div class="col-md">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="inlineRadioOptions" id="inlineRadio1" [value]="true"
-                                                            formControlName="showOnHomePage">
+                                                        <input class="form-check-input" type="radio" id="inlineRadio1"
+                                                            [value]="true" formControlName="showOnHomePage">
                                                         <label class="form-check-label" for="inlineRadio1">Yes</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="inlineRadioOptions" id="inlineRadio2" [value]="false"
-                                                            formControlName="showOnHomePage">
+                                                        <input class="form-check-input" type="radio" id="inlineRadio2"
+                                                            [value]="false" formControlName="showOnHomePage">
                                                         <label class="form-check-label" for="inlineRadio2">No</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <app-label>Published Date</app-label>
+                                                <app-date-picker formControlName="publishedDate"></app-date-picker>
+                                            </div>
+                                            <div class="col-4">
+                                                <app-label>Price Is USD</app-label>
+                                                <input type="text" class="form form-control form-control-sm"
+                                                    formControlName="priceInUsd">
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>

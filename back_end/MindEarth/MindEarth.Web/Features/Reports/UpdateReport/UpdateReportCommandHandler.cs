@@ -53,6 +53,8 @@ namespace MindEarth.Web.Features.Reports.UpdateReport
             report.ReportWebPageTitle = request.Report.ReportWebPageTitle;
             report.ReportKeyWords = request.Report.ReportKeyWords;
             report.ShowOnHomePage = request.Report.ShowOnHomePage.Value;
+            report.PublishedDate = DateTimeHelper.ConvertDateStringToDate(request.Report.PublishedDate);
+            report.PriceInUsd = request.Report.PriceInUsd;
             //
             var reportSections = new List<DTO_Excel>();
             if (!string.IsNullOrEmpty(request.Report.ExcelSaveFileName))

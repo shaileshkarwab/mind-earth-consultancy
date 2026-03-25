@@ -255,6 +255,10 @@ public partial class MindEarthContext : DbContext
             entity.Property(e => e.IsActive)
                 .HasDefaultValue(true)
                 .HasColumnName("is_active");
+            entity.Property(e => e.PriceInUsd)
+                .HasColumnType("money")
+                .HasColumnName("price_in_usd");
+            entity.Property(e => e.PublishedDate).HasColumnName("published_date");
             entity.Property(e => e.ReportDesc).HasColumnName("report_desc");
             entity.Property(e => e.ReportKeyWords)
                 .HasMaxLength(1000)

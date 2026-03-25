@@ -27,6 +27,10 @@
 
         public bool? ShowOnHomePage { get; set; }
 
+        public string? PublishedDate { get; set; }
+
+        public decimal? PriceInUsd { get; set; }
+
         public List<DTO_ReportImages> images { get; set; } = new List<DTO_ReportImages>();
     }
 

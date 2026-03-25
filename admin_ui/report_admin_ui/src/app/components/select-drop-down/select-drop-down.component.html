@@ -1,0 +1,6 @@
+<select class="form form-control form-control-sm form-select"  [(ngModel)]="inputValue" (change)="changeEvent($event);">
+    <option [value]="''">{{placeHolder}}</option>
+    <option *ngFor="let op of options$|async" [value]="op.rowId">
+        {{op.value}}
+    </option>
+</select>

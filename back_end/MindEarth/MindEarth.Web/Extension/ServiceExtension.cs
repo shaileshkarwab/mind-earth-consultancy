@@ -69,7 +69,8 @@ namespace MindEarth.Web.Extension
                         .WithOrigins(allowOrigins)
                         .AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowCredentials();
+                        .AllowCredentials()
+                        .WithExposedHeaders("X-PAGINATION");
                 });
             });
 
