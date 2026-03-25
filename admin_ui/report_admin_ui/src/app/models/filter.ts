@@ -10,6 +10,7 @@ export interface Filter {
 export interface Criteria {
     value: string;
     entity: string;
+    filterColumn?:string;
 }
 
 export interface BoolFilter {

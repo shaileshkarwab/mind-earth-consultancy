@@ -1,0 +1,26 @@
+{
+    "rows": [
+        {
+            "columns": [
+                {
+                    "colSize": "col-12",
+                    "fields": [
+                        {
+                            "type": "text",
+                            "label": "Categry",
+                            "name": "reportCategory",
+                            "class": "form-control form-control-sm",
+                            "placeHolder": "Select Report Category",
+                            "serviceName": "masterService.getCategories",
+                            "filter": "criteriaFilter",
+                            "datafilter": {
+                                "entity": "Category",
+                                "fieldName": "Name"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

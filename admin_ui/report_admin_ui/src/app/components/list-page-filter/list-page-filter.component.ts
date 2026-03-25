@@ -71,6 +71,7 @@ export class ListPageFilterComponent implements OnInit, OnDestroy {
       boolFilters: [],
       integerRangeFilters: [],
       dateFilters: [],
+      criteria:[],
       pageParameter: {
         pageNo: 1,
         pageSize: 10
@@ -110,6 +111,13 @@ export class ListPageFilterComponent implements OnInit, OnDestroy {
                   filterColumn: field.datafilter?.fieldName!,
                   value: this.filterForm.get(field.name!)!.value,
                   rangeType: field.datafilter?.range!
+                });
+                break;
+              case "criteriaFilter":
+                filter.criteria?.push({
+                  entity: field.datafilter?.entity!,
+                  filterColumn: field.datafilter?.fieldName!,
+                  value: this.filterForm.get(field.name!)!.value
                 });
                 break;
             }

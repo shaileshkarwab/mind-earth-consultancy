@@ -1,5 +1,6 @@
 ﻿using MindEarth.Web.Common.Models;
 using MindEarth.Web.Features.Helpers;
+using System.Buffers;
 using System.Linq.Expressions;
 
 namespace MindEarth.Web.Extension
@@ -184,6 +185,52 @@ namespace MindEarth.Web.Extension
 
             }
 
+
+            //criteria filter -- contains
+            //for boolean filters
+            if (filters.Criteria!= null && filters.Criteria.Count > 0)
+            {
+                foreach (var filter in filters.Criteria)
+                {
+                    // x.SubCategory.SubCategoryListUrl
+                    Expression property = parameter;
+
+                    //if (!string.IsNullOrEmpty(filter.Entity))
+                    //{
+                    //    property = Expression.PropertyOrField(property, filter.Entity);
+                    //}
+
+
+                    if (!string.IsNullOrEmpty(filter.Entity) && filter.Entity != typeof(T).Name)
+                    {
+                        foreach (var part in filter.Entity.Split('.'))
+                        {
+                            property = Expression.PropertyOrField(property, part);
+                        }
+                    }
+
+                    property = Expression.PropertyOrField(property, filter.FilterColumn);
+                    // Convert value type
+                    var constant = Expression.Constant(
+                        Convert.ChangeType(filter.Value, property.Type)
+                    );
+                    // x.SubCategory.SubCategoryListUrl == "value"
+
+                    var toLower = typeof(string).GetMethod("ToLower", Type.EmptyTypes);
+                    var contains = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+
+                    var equality = Expression.Call(
+                        Expression.Call(property, toLower),
+                        contains,
+                        Expression.Constant(filter.Value.ToLower())
+                    );
+
+
+
+                    finalExpression = finalExpression == null ? equality : Expression.AndAlso(finalExpression, equality);
+                }
+
+            }
 
 
             if (finalExpression == null)

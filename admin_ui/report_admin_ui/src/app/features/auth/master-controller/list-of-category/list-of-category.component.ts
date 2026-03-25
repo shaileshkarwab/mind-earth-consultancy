@@ -13,11 +13,12 @@ import { take } from 'rxjs';
 import { NgFor } from '@angular/common';
 import { ConfirmService } from '../../../../services/confirm.service';
 import { ToastService } from '../../../../services';
+import { ListPageFilterComponent } from "../../../../components/list-page-filter/list-page-filter.component";
 
 @Component({
   selector: 'app-list-of-category',
   standalone: true,
-  imports: [ToolBarComponent, NgFor],
+  imports: [ToolBarComponent, NgFor, ListPageFilterComponent],
   templateUrl: './list-of-category.component.html',
   styleUrl: './list-of-category.component.css'
 })
@@ -89,7 +90,7 @@ export class ListOfCategoryComponent implements OnInit {
       canvas.componentInstance.categoryID = categoryID;
     }
 
-    canvas.closed.subscribe(c=>{
+    canvas.closed.subscribe(c => {
       this.populateGrid();
     });
   }
@@ -111,5 +112,10 @@ export class ListOfCategoryComponent implements OnInit {
           });
       }
     });
+  }
+
+  searchCommand(filter: Filter) {
+    this.filter = filter;
+    this.populateGrid();
   }
 }
