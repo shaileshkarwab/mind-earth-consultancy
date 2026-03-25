@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import {
   Box,
   Container,
@@ -24,8 +24,8 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "../page.styles";
-import { categories as reportCategories } from "../data/reports";
-import apis from "../lib/axiosInstance";
+import { useCategories } from "../hooks/useCategories";
+import type { NavSubCategory } from "../types/category";
 
 // ========================
 // Mega Menu Data
@@ -116,25 +116,10 @@ export default function Navbar() {
   const [reportsMegaOpen, setReportsMegaOpen] = useState(false);
   const [servicesMegaOpen, setServicesMegaOpen] = useState(false);
   const [insightsOpen, setInsightsOpen] = useState(false);
-  const [categories, setCategories] = useState<any[]>([]);
+  const { categories, loading } = useCategories();
   const reportsTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const servicesTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const insightsTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    getAllCategories();
-  }, []);
-
-  const getAllCategories = () => {
-    const categories = apis.get("/Category/v2")
-      .then((res) => {
-        console.log("API Response for Categories:", res.data);
-        setCategories(res.data.data);
-      })
-      .catch((err) => {
-        console.error("Error fetching categories:", err);
-      });
-  };
 
   const handleEnter = (
     setter: (v: boolean) => void,
@@ -159,7 +144,7 @@ export default function Navbar() {
       setter(false);
     }, 200);
   };
-  // console.log("Fetched Categories:", categories);
+
   return (
     <>
       {/* Top Bar */}
@@ -278,10 +263,6 @@ export default function Navbar() {
                 mr: 3,
               }}
             >
-              <Link href="/" style={{ textDecoration: "none" }}>
-                {/* <NavButton>Home</NavButton> */}
-              </Link>
-
               {/* Reports mega menu trigger */}
               <Box
                 onMouseEnter={() =>
@@ -406,30 +387,71 @@ export default function Navbar() {
                       gap: 3,
                     }}
                   >
-                    {categories.length > 0 && categories.map((category, index) => (
-                      <Box key={index}>
-                        <CategoryHeading>
-                          {category.categoryName}
-                        </CategoryHeading>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: 0.25,
-                          }}
-                        >
-                          {category.subCategories.map((item: any) => (
-                            <MenuItemLink
-                              key={item.subCategoryLink}
-                              href={`/reports/subcategory/${item.subCategoryLink}`}
-                              onClick={() => setReportsMegaOpen(false)}
-                            >
-                              {item.subCategoryName}
-                            </MenuItemLink>
+                    {loading ? (
+                      // Loading skeleton
+                      Array.from({ length: 4 }).map((_, idx) => (
+                        <Box key={idx}>
+                          <Box
+                            sx={{
+                              height: "20px",
+                              bgcolor: "#e0e0e0",
+                              borderRadius: "4px",
+                              mb: 1,
+                              animation: "pulse 1.5s ease-in-out infinite",
+                              "@keyframes pulse": {
+                                "0%, 100%": { opacity: 1 },
+                                "50%": { opacity: 0.5 },
+                              },
+                            }}
+                          />
+                          {Array.from({ length: 3 }).map((_, itemIdx) => (
+                            <Box
+                              key={itemIdx}
+                              sx={{
+                                height: "16px",
+                                bgcolor: "#f5f5f5",
+                                borderRadius: "4px",
+                                mb: 0.75,
+                                animation: "pulse 1.5s ease-in-out infinite",
+                                "@keyframes pulse": {
+                                  "0%, 100%": { opacity: 1 },
+                                  "50%": { opacity: 0.5 },
+                                },
+                              }}
+                            />
                           ))}
                         </Box>
-                      </Box>
-                    ))}
+                      ))
+                    ) : categories.length > 0 ? (
+                      categories.map((category, index) => (
+                        <Box key={index}>
+                          <CategoryHeading>
+                            {category.categoryName}
+                          </CategoryHeading>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: 0.25,
+                            }}
+                          >
+                            {category.subCategories.map((item: NavSubCategory, idx: number) => (
+                              <MenuItemLink
+                                key={idx}
+                                href={`/reports/subcategory/aerospace-and-defence`}
+                                onClick={() => setReportsMegaOpen(false)}
+                              >
+                                {item.subCategoryName}
+                              </MenuItemLink>
+                            ))}
+                          </Box>
+                        </Box>
+                      ))
+                    ) : (
+                      <Typography sx={{ color: "#999" }}>
+                        No categories available
+                      </Typography>
+                    )}
                   </Box>
                 </Box>
               </Container>

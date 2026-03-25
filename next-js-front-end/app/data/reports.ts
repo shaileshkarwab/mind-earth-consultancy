@@ -37,6 +37,8 @@ export interface ListedReport {
   reportWebImage: string;
 }
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
+
 export const categories: ReportCategoryGroup[] = [
   {
     categoryName: "Industries",
@@ -87,8 +89,7 @@ export const reportsList: ListedReport[] = [
       "MILITARY AIRCRAFT MODERNIZATION MARKET – SIZE, SHARE, TRENDS, GROWTH FORECAST, AND COMPETITIVE ANALYSIS (2025-2030) Report Heading",
     reportDesc:
       "The Military Aircraft Modernization Market is segmented by Aircraft Type (Fighter jets, Transport Aircraft, Attack Helicopters, Transport/Utility Helicopters, Bombers, Special Mission Aircraft), by Customer Type (U.S Air force, Navy/Marine Corps, Army Aviation, Europe (NATO Allies), Asia Pacific Allies, Middle East FMS, Latin America & ROW, Government Depots In-House, Commercial Contractors), by Contract Value Band (Mega Programs, Large Medium , Small), by Supply Chain Tier (Tier 1,Tier 2,Tier 3,Tier 4), by Platform Age (50+ Years Old, 30-49 Years Old, 20-29 Years Old, 10-19 Years Old, <10 Years Old), by Geography (North America, Europe, Asia-Pacific, Middle East, Africa and Latin America).",
-    reportWebImage:
-      "https://localhost:7072/uploaddata/reports/b1f3b63b-5477-40f1-89ed-75952c0dd9da.png",
+    reportWebImage: `${API_BASE}/uploaddata/reports/b1f3b63b-5477-40f1-89ed-75952c0dd9da.png`,
   },
   {
     reportUrlLink:
@@ -97,8 +98,7 @@ export const reportsList: ListedReport[] = [
       "GLOBAL ELECTRIC VEHICLE MARKET – SIZE, SHARE, TRENDS, GROWTH FORECAST, AND COMPETITIVE ANALYSIS (2025-2030)",
     reportDesc:
       "The Global Electric Vehicle Market is segmented by Vehicle Type (Battery Electric Vehicles, Plug-in Hybrid Electric Vehicles, Fuel Cell Electric Vehicles), by Component (Battery, Motor, Charging Infrastructure, Power Electronics), by Vehicle Class (Economy, Mid-Range, Luxury), by End User (Private, Commercial, Government), by Charging Type (AC Charging, DC Fast Charging), by Geography (North America, Europe, Asia-Pacific, Middle East, Africa and Latin America).",
-    reportWebImage:
-      "https://localhost:7072/uploaddata/reports/a2c4d75e-6388-41g2-90fe-86063d1ee8eb.png",
+    reportWebImage: `${API_BASE}/uploaddata/reports/a2c4d75e-6388-41g2-90fe-86063d1ee8eb.png`,
   },
   {
     reportUrlLink:
@@ -107,8 +107,7 @@ export const reportsList: ListedReport[] = [
       "GLOBAL CYBERSECURITY MARKET – SIZE, SHARE, TRENDS, GROWTH FORECAST, AND COMPETITIVE ANALYSIS (2025-2030)",
     reportDesc:
       "The Global Cybersecurity Market is segmented by Component (Solutions, Services), by Deployment (Cloud, On-Premise), by Organization Size (SMEs, Large Enterprises), by Security Type (Network Security, Endpoint Security, Application Security, Cloud Security, Identity & Access Management), by Industry Vertical (BFSI, Healthcare, IT & Telecom, Retail, Government, Defense), by Geography (North America, Europe, Asia-Pacific, Middle East, Africa and Latin America).",
-    reportWebImage:
-      "https://localhost:7072/uploaddata/reports/c3e5f86f-7499-42h3-91gf-97174e2ff9fc.png",
+    reportWebImage: `${API_BASE}/uploaddata/reports/c3e5f86f-7499-42h3-91gf-97174e2ff9fc.png`,
   },
   {
     reportUrlLink:
@@ -117,8 +116,7 @@ export const reportsList: ListedReport[] = [
       "PHARMACEUTICAL DRUG DELIVERY MARKET – SIZE, SHARE, TRENDS, GROWTH FORECAST, AND COMPETITIVE ANALYSIS (2025-2030)",
     reportDesc:
       "The Pharmaceutical Drug Delivery Market is segmented by Route of Administration (Oral, Injectable, Topical, Pulmonary, Transdermal, Nasal), by Device Type (Prefilled Syringes, Auto-Injectors, Inhalers, Infusion Pumps, Transdermal Patches), by Therapeutic Area (Oncology, Diabetes, Cardiovascular, CNS, Infectious Diseases), by End User (Hospitals, Clinics, Home Care), by Geography (North America, Europe, Asia-Pacific, Middle East, Africa and Latin America).",
-    reportWebImage:
-      "https://localhost:7072/uploaddata/reports/d4f6g97g-8500-43i4-92hg-08285f3gg0gd.png",
+    reportWebImage: `${API_BASE}/uploaddata/reports/d4f6g97g-8500-43i4-92hg-08285f3gg0gd.png`,
   },
   {
     reportUrlLink:
@@ -127,8 +125,7 @@ export const reportsList: ListedReport[] = [
       "RENEWABLE ENERGY STORAGE MARKET – SIZE, SHARE, TRENDS, GROWTH FORECAST, AND COMPETITIVE ANALYSIS (2025-2030)",
     reportDesc:
       "The Renewable Energy Storage Market is segmented by Technology (Lithium-Ion Batteries, Flow Batteries, Compressed Air Energy Storage, Pumped Hydro Storage, Flywheel Energy Storage), by Application (Grid-Scale, Residential, Commercial & Industrial), by Energy Source (Solar, Wind, Hydro), by Ownership (Utility-Owned, Customer-Owned, Third-Party Owned), by Geography (North America, Europe, Asia-Pacific, Middle East, Africa and Latin America).",
-    reportWebImage:
-      "https://localhost:7072/uploaddata/reports/e5g7h08h-9611-44j5-93ih-19396g4hh1he.png",
+    reportWebImage: `${API_BASE}/uploaddata/reports/e5g7h08h-9611-44j5-93ih-19396g4hh1he.png`,
   },
   {
     reportUrlLink:
@@ -137,8 +134,7 @@ export const reportsList: ListedReport[] = [
       "GLOBAL ARTIFICIAL INTELLIGENCE IN HEALTHCARE MARKET – SIZE, SHARE, TRENDS, GROWTH FORECAST, AND COMPETITIVE ANALYSIS (2025-2030)",
     reportDesc:
       "The Global AI in Healthcare Market is segmented by Component (Hardware, Software, Services), by Technology (Machine Learning, Natural Language Processing, Computer Vision, Robotics), by Application (Medical Imaging, Drug Discovery, Clinical Trials, Virtual Assistants, Wearables), by End User (Hospitals, Pharmaceutical Companies, Research Institutes, Insurance Providers), by Geography (North America, Europe, Asia-Pacific, Middle East, Africa and Latin America).",
-    reportWebImage:
-      "https://localhost:7072/uploaddata/reports/f6h8i19i-0722-45k6-94ji-20407h5ii2if.png",
+    reportWebImage: `${API_BASE}/uploaddata/reports/f6h8i19i-0722-45k6-94ji-20407h5ii2if.png`,
   },
   {
     reportUrlLink:
@@ -147,8 +143,7 @@ export const reportsList: ListedReport[] = [
       "GLOBAL SEMICONDUCTOR MARKET – SIZE, SHARE, TRENDS, GROWTH FORECAST, AND COMPETITIVE ANALYSIS (2025-2030)",
     reportDesc:
       "The Global Semiconductor Market is segmented by Component (Memory Chips, Logic Chips, Analog ICs, Microprocessors, Discrete Semiconductors), by Application (Consumer Electronics, Automotive, Industrial, Telecommunications, Healthcare, Aerospace & Defense), by Technology Node (Below 7nm, 7-14nm, 15-28nm, Above 28nm), by End User (OEMs, ODMs, EMS Providers), by Geography (North America, Europe, Asia-Pacific, Middle East, Africa and Latin America).",
-    reportWebImage:
-      "https://localhost:7072/uploaddata/reports/g7i9j20j-1833-46l7-95kj-31518i6jj3jg.png",
+    reportWebImage: `${API_BASE}/uploaddata/reports/g7i9j20j-1833-46l7-95kj-31518i6jj3jg.png`,
   },
   {
     reportUrlLink:
@@ -157,8 +152,7 @@ export const reportsList: ListedReport[] = [
       "GLOBAL 5G INFRASTRUCTURE MARKET – SIZE, SHARE, TRENDS, GROWTH FORECAST, AND COMPETITIVE ANALYSIS (2025-2030)",
     reportDesc:
       "The Global 5G Infrastructure Market is segmented by Component (Small Cells, Macro Cells, Radio Access Network, Core Network), by Spectrum (Sub-6 GHz, mmWave), by Network Architecture (Standalone, Non-Standalone), by Deployment (Indoor, Outdoor), by End User (Telecom Operators, Enterprises, Government), by Vertical (Healthcare, Manufacturing, Automotive, BFSI, Media & Entertainment), by Geography (North America, Europe, Asia-Pacific, Middle East, Africa and Latin America).",
-    reportWebImage:
-      "https://localhost:7072/uploaddata/reports/h8j0k31k-2944-47m8-96lk-42629j7kk4kh.png",
+    reportWebImage: `${API_BASE}/uploaddata/reports/h8j0k31k-2944-47m8-96lk-42629j7kk4kh.png`,
   },
   {
     reportUrlLink:
@@ -167,8 +161,7 @@ export const reportsList: ListedReport[] = [
       "GLOBAL AUTONOMOUS VEHICLE MARKET – SIZE, SHARE, TRENDS, GROWTH FORECAST, AND COMPETITIVE ANALYSIS (2025-2030)",
     reportDesc:
       "The Global Autonomous Vehicle Market is segmented by Automation Level (Level 1, Level 2, Level 3, Level 4, Level 5), by Vehicle Type (Passenger Cars, Commercial Vehicles, Shuttles & Pods), by Component (LiDAR, Radar, Camera, AI & Compute Platform, HD Mapping), by Application (Personal Mobility, Ride-Hailing, Logistics & Delivery, Public Transit), by Propulsion (Electric, Hybrid, ICE), by Geography (North America, Europe, Asia-Pacific, Middle East, Africa and Latin America).",
-    reportWebImage:
-      "https://localhost:7072/uploaddata/reports/i9k1l42l-3055-48n9-97ml-53730k8ll5li.png",
+    reportWebImage: `${API_BASE}/uploaddata/reports/i9k1l42l-3055-48n9-97ml-53730k8ll5li.png`,
   },
   {
     reportUrlLink:
@@ -177,8 +170,7 @@ export const reportsList: ListedReport[] = [
       "GLOBAL SPACE ECONOMY MARKET – SIZE, SHARE, TRENDS, GROWTH FORECAST, AND COMPETITIVE ANALYSIS (2025-2030)",
     reportDesc:
       "The Global Space Economy Market is segmented by Segment (Satellite Manufacturing, Launch Services, Ground Equipment, Satellite Services), by Orbit (LEO, MEO, GEO, HEO), by Application (Communication, Earth Observation, Navigation, Space Exploration, ISR), by End User (Government & Defense, Commercial, Civil), by Satellite Size (Large, Medium, Small, Nano & Pico), by Geography (North America, Europe, Asia-Pacific, Middle East, Africa and Latin America).",
-    reportWebImage:
-      "https://localhost:7072/uploaddata/reports/j0l2m53m-4166-49o0-98nm-64841l9mm6mj.png",
+    reportWebImage: `${API_BASE}/uploaddata/reports/j0l2m53m-4166-49o0-98nm-64841l9mm6mj.png`,
   },
 ];
 

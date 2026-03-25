@@ -30,7 +30,6 @@ export const GRAY = TEXT_BODY;
 
 export const FOOTER_SECTION = {
   mx: 0,
-  // borderRadius: '10px',
   overflow: 'hidden',
 } as const;
 
