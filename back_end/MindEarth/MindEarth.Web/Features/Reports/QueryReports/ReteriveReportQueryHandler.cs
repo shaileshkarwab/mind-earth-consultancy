@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MindEarth.Database.Entity;
 using MindEarth.Web.Errors;
+using MindEarth.Web.Features.Helpers;
 using MindEarth.Web.Features.Reports.DTO;
 using MindEarth.Web.Features.Services;
 
@@ -38,7 +39,9 @@ namespace MindEarth.Web.Features.Reports.QueryReports
                 ExcelSaveFileName = report.ExcelSaveFileName,
                 ReportKeyWords = report.ReportKeyWords,
                 ReportWebPageTitle = report.ReportWebPageTitle,
-                ShowOnHomePage = report.ShowOnHomePage
+                ShowOnHomePage = report.ShowOnHomePage,
+                PublishedDate = DateTimeHelper.ConvertDateTimeToString(report.PublishedDate.Value),
+                PriceInUsd = report.PriceInUsd
             };
 
             foreach (var image in report.ReportImages)

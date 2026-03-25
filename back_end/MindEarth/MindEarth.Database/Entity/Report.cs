@@ -39,6 +39,10 @@ public partial class Report
 
     public bool ShowOnHomePage { get; set; }
 
+    public DateOnly? PublishedDate { get; set; }
+
+    public decimal? PriceInUsd { get; set; }
+
     public virtual User CreatedByNavigation { get; set; } = null!;
 
     public virtual ICollection<ReportImage> ReportImages { get; set; } = new List<ReportImage>();

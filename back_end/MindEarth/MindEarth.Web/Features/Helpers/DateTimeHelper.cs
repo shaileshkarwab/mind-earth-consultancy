@@ -14,5 +14,7 @@ namespace MindEarth.Web.Features.Helpers
         {
             return date.ToString();
         }
+
+
     }
 }

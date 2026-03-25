@@ -1,10 +1,14 @@
-﻿using FluentResults;
+﻿using Azure;
+using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MindEarth.Database.Entity;
 using MindEarth.Web.Extension;
+using MindEarth.Web.Features.DTO;
 using MindEarth.Web.Features.Reports.DTO;
 using MindEarth.Web.Features.Services;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace MindEarth.Web.Features.Reports.QueryReports
 {
@@ -14,21 +18,31 @@ namespace MindEarth.Web.Features.Reports.QueryReports
         private readonly IConfigParamService configuration;
         const string folderPath = "reports";
         private readonly string webDocumentPath;
-        public ListReportQueryForExternalHandler(MindEarthContext context, IConfigParamService configuration )
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public ListReportQueryForExternalHandler(MindEarthContext context, IConfigParamService configuration, IHttpContextAccessor httpContextAccessor )
         {
             this.context = context;
             this.configuration = configuration;
             webDocumentPath = this.configuration.GetWebPath();
+            this.httpContextAccessor = httpContextAccessor;
         }
         public async Task<Result<List<DTO_ReportExternal>>> Handle(ListReportQueryForExternal request, CancellationToken cancellationToken)
         {
+            PaginationMeta meta;
+
             var reportForFilter = this.context.Set<Report>()
             .Include(r => r.SubCategoryMaster)
             .OrderBy(c => c.SubCategoryMaster.Name).ThenBy(c => c.ExcelSaveFileName)
             .AsQueryable();
 
-            reportForFilter = reportForFilter.ApplyEqualityFilters(request.Filter).ApplyPagination(request.Filter.PageParameter);
-            Int32 totalRecord = reportForFilter.Count();
+            reportForFilter = reportForFilter.ApplyEqualityFilters(request.Filter);
+            reportForFilter = reportForFilter.ApplyPagination(request.Filter.PageParameter, out meta);
+
+
+            if (meta != null)
+            {
+                this.httpContextAccessor.HttpContext.Response.Headers.Add("X-PAGINATION", JsonConvert.SerializeObject(meta));
+            }
 
             var reports = await reportForFilter.Select(c => new
             {
