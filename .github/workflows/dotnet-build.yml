@@ -26,7 +26,7 @@ jobs:
         run: dotnet publish back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj --configuration Release --output publish --no-build
 
       - name: Zip Publish
-        run: Compress-Archive -Path publish\* -DestinationPath publish.zip
+        run: zip -r publish.zip ./publish
 
       # Copy to VPS
       - name: Copy files to VPS
