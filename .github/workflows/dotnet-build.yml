@@ -56,39 +56,25 @@ jobs:
           port: 22
           insecure: true
           script: |
-            cmd /c "
-            echo ===== START DEPLOYMENT ===== &&
+            echo ===== START DEPLOYMENT =====
       
-            if not exist C:\mind-earth mkdir C:\mind-earth &&
+            mkdir C:\mind-earth 2>nul
+            rmdir /s /q C:\mind-earth\deploy 2>nul
+            mkdir C:\mind-earth\deploy
       
-            if exist C:\mind-earth\deploy rmdir /s /q C:\mind-earth\deploy &&
-            mkdir C:\mind-earth\deploy &&
+            echo Extracting ZIP...
+            tar -xf C:\mind-earth\publish.zip -C C:\mind-earth\deploy
       
-            if not exist C:\mind-earth\publish.zip (
-              echo ZIP NOT FOUND
-              exit /b 1
-            ) &&
+            echo Files after extraction:
+            dir C:\mind-earth\deploy
       
-            echo Extracting ZIP... &&
+            echo Stopping IIS...
+            iisreset /stop
       
-            tar -xf C:\mind-earth\publish.zip -C C:\mind-earth\deploy &&
+            echo Copying files...
+            robocopy C:\mind-earth\deploy\publish C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
       
-            echo Files after extraction: &&
-            dir C:\mind-earth\deploy &&
-      
-            echo Stopping IIS... &&
-            iisreset /stop &&
-      
-            echo Copying files... &&
-      
-            if exist C:\mind-earth\deploy\publish (
-              robocopy C:\mind-earth\deploy\publish C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
-            ) else (
-              robocopy C:\mind-earth\deploy C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
-            ) &&
-      
-            echo Starting IIS... &&
-            iisreset /start &&
+            echo Starting IIS...
+            iisreset /start
       
             echo ===== DEPLOYMENT COMPLETED =====
-            "
