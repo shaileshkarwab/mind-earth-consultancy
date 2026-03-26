@@ -1,47 +1,86 @@
+name: Build and Deploy to Windows VPS
+
 on:
-  workflow_dispatch: 
-  
+  workflow_dispatch:
+
 jobs:
-  build:
-    runs-on: windows-latest   # 👈 Use Windows instead of Ubuntu
+  build-and-deploy:
+    runs-on: windows-latest   # 👈 IMPORTANT for WinRM support
 
     steps:
-      - name: Checkout
+      # 1️⃣ Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup .NET 8
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      - name: Restore
+      # 3️⃣ Restore
+      - name: Restore Dependencies
         run: dotnet restore back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj
 
-      - name: Build
+      # 4️⃣ Build
+      - name: Build Project
         run: dotnet build back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj --configuration Release --no-restore
 
-      - name: Publish
+      # 5️⃣ Publish
+      - name: Publish Project
         run: dotnet publish back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj --configuration Release --output publish --no-build
 
-      - name: Zip Publish
+      # 6️⃣ Zip Publish
+      - name: Zip Publish Folder
         run: Compress-Archive -Path publish\* -DestinationPath publish.zip
 
+      # 7️⃣ Enable WinRM on CLIENT (GitHub runner)
+      - name: Configure WinRM Client
+        shell: powershell
+        run: |
+          winrm set winrm/config/client '@{AllowUnencrypted="true"}'
+          winrm set winrm/config/client/auth '@{Basic="true"}'
+
+      # 8️⃣ Deploy to VPS
       - name: Deploy to Windows VPS
         shell: powershell
         run: |
           $password = ConvertTo-SecureString "${{ secrets.VPS_PASSWORD }}" -AsPlainText -Force
           $cred = New-Object System.Management.Automation.PSCredential("${{ secrets.VPS_USER }}", $password)
+
+          # Create session
           $session = New-PSSession -ComputerName "${{ secrets.VPS_HOST }}" -Credential $cred -Authentication Basic
 
+          # Ensure temp folder exists
+          Invoke-Command -Session $session -ScriptBlock {
+              if (!(Test-Path "C:\temp")) {
+                  New-Item -ItemType Directory -Path "C:\temp"
+              }
+          }
+
+          # Copy zip file
           Copy-Item -Path publish.zip -Destination "C:\temp\publish.zip" -ToSession $session -Force
 
+          # Deploy
           Invoke-Command -Session $session -ScriptBlock {
+              # Extract files
               Expand-Archive -Path C:\temp\publish.zip -DestinationPath C:\temp\deploy -Force
 
               Import-Module WebAdministration
+
+              # Stop IIS site
               Stop-WebSite -Name 'admin-api.mindearthconsultancy.com'
+
+              # Copy files to IIS folder
               robocopy C:\temp\deploy\publish "C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com" /MIR
+
+              # Start IIS site
               Start-WebSite -Name 'admin-api.mindearthconsultancy.com'
+
+              # Verify deployment
+              Write-Host "Deployed files:"
+              Get-ChildItem -Path "C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com" | Select-Object Name -First 5
           }
 
+          # Close session
           Remove-PSSession $session
