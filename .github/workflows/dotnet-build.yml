@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest   # 👈 changed here
+    runs-on: ubuntu-latest   # 👈 changed here
 
     steps:
       - name: Checkout Code
