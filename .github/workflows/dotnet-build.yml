@@ -30,9 +30,11 @@ jobs:
       - name: Publish
         run: dotnet publish back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj --configuration Release --output publish --no-build
 
-      # 6️⃣ Zip
-      - name: Zip Publish
-        run: zip -r publish.zip ./publish
+      # 6️⃣ Zip ONLY CONTENTS (important fix)
+      - name: Zip Publish Output
+        run: |
+          cd publish
+          zip -r ../publish.zip .
 
       # 7️⃣ Copy to VPS
       - name: Copy to VPS
@@ -46,8 +48,8 @@ jobs:
           port: 22
           insecure: true
 
-      # 8️⃣ Deploy on VPS (CMD only)
-      - name: Deploy on VPS
+      # 8️⃣ Deploy on VPS
+      - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -71,8 +73,7 @@ jobs:
             Write-Output 'Stopping IIS...';
             Stop-WebSite -Name 'admin-api.mindearthconsultancy.com';
             Write-Output 'Copying files...';
-            robocopy 'C:\mind-earth\deploy\publish' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR;
-            robocopy 'C:\mind-earth\deploy' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR;
+            robocopy 'C:\mind-earth\deploy\*' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR;
             Write-Output 'Starting IIS...';
             Start-WebSite -Name 'admin-api.mindearthconsultancy.com';
             Write-Output '===== DEPLOYMENT COMPLETED =====';
