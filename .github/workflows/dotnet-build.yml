@@ -48,33 +48,48 @@ jobs:
 
       # 8️⃣ Deploy on VPS (SSH)
       - name: Deploy on VPS
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
-          port: 22
-          insecure: true
-          script: |
-            powershell -Command "
-              # Ensure temp folder exists
-              if (!(Test-Path 'C:\mind-earth')) { New-Item -ItemType Directory -Path 'C:\mind-earth' }
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        password: ${{ secrets.VPS_PASSWORD }}
+        port: 22
+        insecure: true
+        script: |
+          powershell -Command "
+          Write-Host 'Starting deployment...'
 
-              # Extract files
-              Expand-Archive -Path C:\mind-earth\publish.zip -DestinationPath C:\mind-earth\deploy -Force
+          # Ensure folders exist
+          if (!(Test-Path 'C:\mind-earth')) { New-Item -ItemType Directory -Path 'C:\mind-earth' }
+          if (!(Test-Path 'C:\mind-earth\deploy')) { New-Item -ItemType Directory -Path 'C:\mind-earth\deploy' }
 
-              Import-Module WebAdministration
+          # Check zip exists
+          if (!(Test-Path 'C:\mind-earth\publish.zip')) {
+            Write-Host 'ZIP NOT FOUND!'
+            exit 1
+          }
 
-              # Stop IIS site
-              Stop-WebSite -Name 'admin-api.mindearthconsultancy.com'
+          Write-Host 'Extracting zip...'
 
-              # Copy files to IIS folder
-              robocopy C:\mind-earth\deploy\publish C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
+          # Remove old deploy content
+          Remove-Item -Recurse -Force C:\mind-earth\deploy\* -ErrorAction SilentlyContinue
 
-              # Start IIS site
-              Start-WebSite -Name 'admin-api.mindearthconsultancy.com'
+          # Extract
+          Expand-Archive -Path 'C:\mind-earth\publish.zip' -DestinationPath 'C:\mind-earth\deploy' -Force
 
-              # Verify deployment
-              Write-Host 'Deployment completed'
-              Get-ChildItem C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com | Select-Object Name -First 5
-            "
+          Write-Host 'Files after extraction:'
+          Get-ChildItem C:\mind-earth\deploy
+
+          Import-Module WebAdministration
+
+          Write-Host 'Stopping IIS site...'
+          Stop-WebSite -Name 'admin-api.mindearthconsultancy.com'
+
+          Write-Host 'Copying files...'
+          robocopy C:\mind-earth\deploy\publish C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
+
+          Write-Host 'Starting IIS site...'
+          Start-WebSite -Name 'admin-api.mindearthconsultancy.com'
+
+          Write-Host 'Deployment completed'
+        "
