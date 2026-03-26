@@ -59,33 +59,37 @@ jobs:
           script: |
             echo "===== START DEPLOYMENT ====="
 
-            if (!(Test-Path 'C:\mind-earth')) { New-Item -ItemType Directory -Path 'C:\mind-earth' }
+            # Create base folder
+            powershell -Command "if (!(Test-Path 'C:\mind-earth')) { New-Item -ItemType Directory -Path 'C:\mind-earth' }"
 
-            if (Test-Path 'C:\mind-earth\deploy') {
-              Remove-Item -Recurse -Force 'C:\mind-earth\deploy'
-            }
-            New-Item -ItemType Directory -Path 'C:\mind-earth\deploy'
+            # Clean deploy folder
+            powershell -Command "if (Test-Path 'C:\mind-earth\deploy') { Remove-Item -Recurse -Force 'C:\mind-earth\deploy' }"
+            powershell -Command "New-Item -ItemType Directory -Path 'C:\mind-earth\deploy'"
 
-            if (!(Test-Path 'C:\mind-earth\publish.zip')) {
-              echo "ZIP NOT FOUND"
-              exit 1
-            }
+            # Check zip exists
+            powershell -Command "if (!(Test-Path 'C:\mind-earth\publish.zip')) { Write-Output 'ZIP NOT FOUND'; exit 1 }"
 
+            # Show zip size
             echo "ZIP SIZE:"
             powershell -Command "(Get-Item 'C:\mind-earth\publish.zip').Length"
 
+            # Extract ZIP using .NET (reliable)
             echo "Extracting ZIP..."
             powershell -Command "Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::ExtractToDirectory('C:\mind-earth\publish.zip','C:\mind-earth\deploy')"
 
+            # Show extracted files
             echo "Files after extraction:"
             powershell -Command "Get-ChildItem 'C:\mind-earth\deploy'"
 
+            # Stop IIS
             echo "Stopping IIS..."
             powershell -Command "Import-Module WebAdministration; Stop-WebSite -Name 'admin-api.mindearthconsultancy.com'"
 
+            # Copy files
             echo "Copying files..."
             powershell -Command "if (Test-Path 'C:\mind-earth\deploy\publish') { robocopy 'C:\mind-earth\deploy\publish' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR } else { robocopy 'C:\mind-earth\deploy' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR }"
 
+            # Start IIS
             echo "Starting IIS..."
             powershell -Command "Start-WebSite -Name 'admin-api.mindearthconsultancy.com'"
 
