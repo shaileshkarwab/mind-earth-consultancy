@@ -41,6 +41,13 @@ jobs:
           winrm set winrm/config/client '@{AllowUnencrypted="true"}'
           winrm set winrm/config/client/auth '@{Basic="true"}'
 
+      - name: Configure WinRM Client
+        shell: powershell
+        run: |
+            winrm set winrm/config/client '@{AllowUnencrypted="true"}'
+            winrm set winrm/config/client/auth '@{Basic="true"}'
+            winrm set winrm/config/client '@{TrustedHosts="${{ secrets.VPS_HOST }}"}'
+
       # 8️⃣ Deploy to VPS
       - name: Deploy to Windows VPS
         shell: powershell
