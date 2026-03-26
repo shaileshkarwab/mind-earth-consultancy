@@ -9,7 +9,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: back_end/MindEarth.Web
+        working-directory: back_end/MindEarth/MindEarth.Web
 
     steps:
       - name: Checkout Code
