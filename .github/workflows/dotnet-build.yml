@@ -56,18 +56,27 @@ jobs:
           port: 22
           insecure: true
           script: >
-            cmd /c "echo ===== START DEPLOYMENT ===== &&
-            mkdir C:\mind-earth 2>nul &&
-            rmdir /s /q C:\mind-earth\deploy 2>nul &&
-            mkdir C:\mind-earth\deploy &&
-            echo Extracting ZIP... &&
-            tar -xf C:\mind-earth\publish.zip -C C:\mind-earth\deploy &&
-            echo Files after extraction: &&
-            dir C:\mind-earth\deploy &&
-            echo Stopping IIS... &&
-            iisreset /stop &&
-            echo Copying files... &&
-            robocopy C:\mind-earth\deploy\publish C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR &&
-            echo Starting IIS... &&
-            iisreset /start &&
-            echo ===== DEPLOYMENT COMPLETED ====="
+            C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "
+            Write-Output '===== START DEPLOYMENT =====';
+            New-Item -ItemType Directory -Force -Path 'C:\mind-earth';
+            Remove-Item -Recurse -Force 'C:\mind-earth\deploy' -ErrorAction SilentlyContinue;
+            New-Item -ItemType Directory -Path 'C:\mind-earth\deploy';
+            if (!(Test-Path 'C:\mind-earth\publish.zip')) { Write-Output 'ZIP NOT FOUND'; exit 1 };
+            Write-Output 'Extracting ZIP...';
+            Add-Type -AssemblyName System.IO.Compression.FileSystem;
+            [System.IO.Compression.ZipFile]::ExtractToDirectory('C:\mind-earth\publish.zip','C:\mind-earth\deploy');
+            Write-Output 'Files after extraction:';
+            Get-ChildItem 'C:\mind-earth\deploy';
+            Import-Module WebAdministration;
+            Write-Output 'Stopping IIS...';
+            Stop-WebSite -Name 'admin-api.mindearthconsultancy.com';
+            Write-Output 'Copying files...';
+            if (Test-Path 'C:\mind-earth\deploy\publish') {
+              robocopy 'C:\mind-earth\deploy\publish' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR;
+            } else {
+              robocopy 'C:\mind-earth\deploy' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR;
+            };
+            Write-Output 'Starting IIS...';
+            Start-WebSite -Name 'admin-api.mindearthconsultancy.com';
+            Write-Output '===== DEPLOYMENT COMPLETED =====';
+            "
