@@ -17,13 +17,13 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore
-        run: dotnet restore back_end/MindEarth.Web/MindEarth.Web.csproj
+        run: dotnet restore back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj
 
       - name: Build
-        run: dotnet build back_end/MindEarth.Web/MindEarth.Web.csproj --configuration Release --no-restore
+        run: dotnet build back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish back_end/MindEarth.Web/MindEarth.Web.csproj --configuration Release --output publish --no-build
+        run: dotnet publish back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj --configuration Release --output publish --no-build
 
       - name: Zip Publish
         run: Compress-Archive -Path publish\* -DestinationPath publish.zip
