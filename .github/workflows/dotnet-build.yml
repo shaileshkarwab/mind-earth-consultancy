@@ -55,26 +55,19 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           port: 22
           insecure: true
-          script: |
-            echo ===== START DEPLOYMENT =====
-      
-            mkdir C:\mind-earth 2>nul
-            rmdir /s /q C:\mind-earth\deploy 2>nul
-            mkdir C:\mind-earth\deploy
-      
-            echo Extracting ZIP...
-            tar -xf C:\mind-earth\publish.zip -C C:\mind-earth\deploy
-      
-            echo Files after extraction:
-            dir C:\mind-earth\deploy
-      
-            echo Stopping IIS...
-            iisreset /stop
-      
-            echo Copying files...
-            robocopy C:\mind-earth\deploy\publish C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
-      
-            echo Starting IIS...
-            iisreset /start
-      
-            echo ===== DEPLOYMENT COMPLETED =====
+          script: >
+            cmd /c "echo ===== START DEPLOYMENT ===== &&
+            mkdir C:\mind-earth 2>nul &&
+            rmdir /s /q C:\mind-earth\deploy 2>nul &&
+            mkdir C:\mind-earth\deploy &&
+            echo Extracting ZIP... &&
+            tar -xf C:\mind-earth\publish.zip -C C:\mind-earth\deploy &&
+            echo Files after extraction: &&
+            dir C:\mind-earth\deploy &&
+            echo Stopping IIS... &&
+            iisreset /stop &&
+            echo Copying files... &&
+            robocopy C:\mind-earth\deploy\publish C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR &&
+            echo Starting IIS... &&
+            iisreset /start &&
+            echo ===== DEPLOYMENT COMPLETED ====="
