@@ -7,9 +7,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-  defaults:
-    run:
-      working-directory: back_end/MindEarth.web
+    defaults:
+      run:
+        working-directory: back_end/MindEarth.web
 
     steps:
       - name: Checkout Code
