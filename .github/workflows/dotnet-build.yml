@@ -1,64 +1,44 @@
-name: Build and Deploy to VPS (Windows)
-
-on:
-  workflow_dispatch:
-
 jobs:
   build:
-    runs-on: ubuntu-latest   # Linux runner is fine
+    runs-on: windows-latest   # 👈 Use Windows instead of Ubuntu
 
     steps:
-      # 1️⃣ Checkout
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup .NET 8
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      # 3️⃣ Restore
       - name: Restore
         run: dotnet restore back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj
 
-      # 4️⃣ Build
       - name: Build
         run: dotnet build back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj --configuration Release --no-restore
 
-      # 5️⃣ Publish
       - name: Publish
         run: dotnet publish back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj --configuration Release --output publish --no-build
 
-      # 6️⃣ Zip publish
       - name: Zip Publish
-        run: zip -r publish.zip ./publish
+        run: Compress-Archive -Path publish\* -DestinationPath publish.zip
 
-      # 7️⃣ Deploy to Windows VPS via PowerShell Remoting
       - name: Deploy to Windows VPS
-        shell: pwsh
+        shell: powershell
         run: |
           $password = ConvertTo-SecureString "${{ secrets.VPS_PASSWORD }}" -AsPlainText -Force
           $cred = New-Object System.Management.Automation.PSCredential("${{ secrets.VPS_USER }}", $password)
           $session = New-PSSession -ComputerName "${{ secrets.VPS_HOST }}" -Credential $cred -Authentication Basic
 
-          # Copy zip to VPS
           Copy-Item -Path publish.zip -Destination "C:\temp\publish.zip" -ToSession $session -Force
 
-          # Deploy on VPS
           Invoke-Command -Session $session -ScriptBlock {
               Expand-Archive -Path C:\temp\publish.zip -DestinationPath C:\temp\deploy -Force
 
               Import-Module WebAdministration
-
               Stop-WebSite -Name 'admin-api.mindearthconsultancy.com'
-
               robocopy C:\temp\deploy\publish "C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com" /MIR
-
               Start-WebSite -Name 'admin-api.mindearthconsultancy.com'
-
-              # Optional: verify deployed files
-              Get-ChildItem -Path "C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com" | Select-Object Name, Length -First 5
           }
 
           Remove-PSSession $session
