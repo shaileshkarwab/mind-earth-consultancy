@@ -5,10 +5,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest   # build on Linux is fine
+    runs-on: ubuntu-latest   # Linux runner is fine
 
     steps:
-      # Checkout
+      # 1️⃣ Checkout
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -34,37 +34,31 @@ jobs:
       - name: Zip Publish
         run: zip -r publish.zip ./publish
 
-      # 7️⃣ Deploy to Windows VPS via WinRM
-      - name: Deploy on VPS
-        uses: microsoft/pwsh-action@v1
-        with:
-          pwsh: true
-          inlineScript: |
-            $secpasswd = ConvertTo-SecureString "${{ secrets.VPS_PASSWORD }}" -AsPlainText -Force
-            $cred = New-Object System.Management.Automation.PSCredential ("${{ secrets.VPS_USER }}", $secpasswd)
-            $session = New-PSSession -ComputerName "${{ secrets.VPS_HOST }}" -Credential $cred -Authentication Basic
+      # 7️⃣ Deploy to Windows VPS via PowerShell Remoting
+      - name: Deploy to Windows VPS
+        shell: pwsh
+        run: |
+          $password = ConvertTo-SecureString "${{ secrets.VPS_PASSWORD }}" -AsPlainText -Force
+          $cred = New-Object System.Management.Automation.PSCredential("${{ secrets.VPS_USER }}", $password)
+          $session = New-PSSession -ComputerName "${{ secrets.VPS_HOST }}" -Credential $cred -Authentication Basic
 
-            # Copy publish.zip to temp folder
-            Copy-Item -Path publish.zip -Destination "C:\temp\publish.zip" -ToSession $session -Force
+          # Copy zip to VPS
+          Copy-Item -Path publish.zip -Destination "C:\temp\publish.zip" -ToSession $session -Force
 
-            # Deploy
-            Invoke-Command -Session $session -ScriptBlock {
-                Expand-Archive -Path C:\temp\publish.zip -DestinationPath C:\temp\deploy -Force
+          # Deploy on VPS
+          Invoke-Command -Session $session -ScriptBlock {
+              Expand-Archive -Path C:\temp\publish.zip -DestinationPath C:\temp\deploy -Force
 
-                Import-Module WebAdministration
+              Import-Module WebAdministration
 
-                # Stop IIS site
-                Stop-WebSite -Name 'admin-api.mindearthconsultancy.com'
+              Stop-WebSite -Name 'admin-api.mindearthconsultancy.com'
 
-                # Deploy files to IIS folder
-                robocopy C:\temp\deploy\publish "C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com" /MIR
+              robocopy C:\temp\deploy\publish "C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com" /MIR
 
-                # Start IIS site
-                Start-WebSite -Name 'admin-api.mindearthconsultancy.com'
+              Start-WebSite -Name 'admin-api.mindearthconsultancy.com'
 
-                # Optional: verify deployed files
-                Get-ChildItem -Path "C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com" | Select-Object Name, Length -First 5
-            }
+              # Optional: verify deployed files
+              Get-ChildItem -Path "C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com" | Select-Object Name, Length -First 5
+          }
 
-            # Close session
-            Remove-PSSession $session
+          Remove-PSSession $session
