@@ -56,41 +56,39 @@ jobs:
           port: 22
           insecure: true
           script: |
-            echo ===== START DEPLOYMENT =====
-
-            REM Create base folder
-            if not exist C:\mind-earth mkdir C:\mind-earth
-
-            REM Clean deploy folder
-            if exist C:\mind-earth\deploy rmdir /s /q C:\mind-earth\deploy
-            mkdir C:\mind-earth\deploy
-
-            REM Check zip exists
+            cmd /c "
+            echo ===== START DEPLOYMENT ===== &&
+      
+            if not exist C:\mind-earth mkdir C:\mind-earth &&
+      
+            if exist C:\mind-earth\deploy rmdir /s /q C:\mind-earth\deploy &&
+            mkdir C:\mind-earth\deploy &&
+      
             if not exist C:\mind-earth\publish.zip (
               echo ZIP NOT FOUND
               exit /b 1
-            )
-
-            echo Extracting ZIP...
-
-            REM Extract using tar (works on Windows)
-            tar -xf C:\mind-earth\publish.zip -C C:\mind-earth\deploy
-
-            echo Files after extraction:
-            dir C:\mind-earth\deploy
-
-            echo Stopping IIS...
-            iisreset /stop
-
-            echo Copying files...
-
+            ) &&
+      
+            echo Extracting ZIP... &&
+      
+            tar -xf C:\mind-earth\publish.zip -C C:\mind-earth\deploy &&
+      
+            echo Files after extraction: &&
+            dir C:\mind-earth\deploy &&
+      
+            echo Stopping IIS... &&
+            iisreset /stop &&
+      
+            echo Copying files... &&
+      
             if exist C:\mind-earth\deploy\publish (
               robocopy C:\mind-earth\deploy\publish C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
             ) else (
               robocopy C:\mind-earth\deploy C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
-            )
-
-            echo Starting IIS...
-            iisreset /start
-
+            ) &&
+      
+            echo Starting IIS... &&
+            iisreset /start &&
+      
             echo ===== DEPLOYMENT COMPLETED =====
+            "
