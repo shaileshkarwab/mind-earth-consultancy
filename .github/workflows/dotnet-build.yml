@@ -45,9 +45,8 @@ jobs:
           target: "C:/mind-earth"
           port: 22
           insecure: true
-          debug: true
 
-      # 8️⃣ Deploy on VPS
+      # 8️⃣ Deploy on VPS (CMD only)
       - name: Deploy on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -57,40 +56,41 @@ jobs:
           port: 22
           insecure: true
           script: |
-            echo "===== START DEPLOYMENT ====="
+            echo ===== START DEPLOYMENT =====
 
-            # Create base folder
-            powershell -Command "if (!(Test-Path 'C:\mind-earth')) { New-Item -ItemType Directory -Path 'C:\mind-earth' }"
+            REM Create base folder
+            if not exist C:\mind-earth mkdir C:\mind-earth
 
-            # Clean deploy folder
-            powershell -Command "if (Test-Path 'C:\mind-earth\deploy') { Remove-Item -Recurse -Force 'C:\mind-earth\deploy' }"
-            powershell -Command "New-Item -ItemType Directory -Path 'C:\mind-earth\deploy'"
+            REM Clean deploy folder
+            if exist C:\mind-earth\deploy rmdir /s /q C:\mind-earth\deploy
+            mkdir C:\mind-earth\deploy
 
-            # Check zip exists
-            powershell -Command "if (!(Test-Path 'C:\mind-earth\publish.zip')) { Write-Output 'ZIP NOT FOUND'; exit 1 }"
+            REM Check zip exists
+            if not exist C:\mind-earth\publish.zip (
+              echo ZIP NOT FOUND
+              exit /b 1
+            )
 
-            # Show zip size
-            echo "ZIP SIZE:"
-            powershell -Command "(Get-Item 'C:\mind-earth\publish.zip').Length"
+            echo Extracting ZIP...
 
-            # Extract ZIP using .NET (reliable)
-            echo "Extracting ZIP..."
-            powershell -Command "Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::ExtractToDirectory('C:\mind-earth\publish.zip','C:\mind-earth\deploy')"
+            REM Extract using tar (works on Windows)
+            tar -xf C:\mind-earth\publish.zip -C C:\mind-earth\deploy
 
-            # Show extracted files
-            echo "Files after extraction:"
-            powershell -Command "Get-ChildItem 'C:\mind-earth\deploy'"
+            echo Files after extraction:
+            dir C:\mind-earth\deploy
 
-            # Stop IIS
-            echo "Stopping IIS..."
-            powershell -Command "Import-Module WebAdministration; Stop-WebSite -Name 'admin-api.mindearthconsultancy.com'"
+            echo Stopping IIS...
+            iisreset /stop
 
-            # Copy files
-            echo "Copying files..."
-            powershell -Command "if (Test-Path 'C:\mind-earth\deploy\publish') { robocopy 'C:\mind-earth\deploy\publish' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR } else { robocopy 'C:\mind-earth\deploy' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR }"
+            echo Copying files...
 
-            # Start IIS
-            echo "Starting IIS..."
-            powershell -Command "Start-WebSite -Name 'admin-api.mindearthconsultancy.com'"
+            if exist C:\mind-earth\deploy\publish (
+              robocopy C:\mind-earth\deploy\publish C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
+            ) else (
+              robocopy C:\mind-earth\deploy C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
+            )
 
-            echo "===== DEPLOYMENT COMPLETED ====="
+            echo Starting IIS...
+            iisreset /start
+
+            echo ===== DEPLOYMENT COMPLETED =====
