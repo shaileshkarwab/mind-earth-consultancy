@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout
+      # 1️⃣ Checkout code
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -19,22 +19,22 @@ jobs:
           dotnet-version: '8.0.x'
 
       # 3️⃣ Restore
-      - name: Restore
+      - name: Restore Dependencies
         run: dotnet restore back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj
 
       # 4️⃣ Build
-      - name: Build
+      - name: Build Project
         run: dotnet build back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj --configuration Release --no-restore
 
       # 5️⃣ Publish
-      - name: Publish
+      - name: Publish Project
         run: dotnet publish back_end/MindEarth/MindEarth.Web/MindEarth.Web.csproj --configuration Release --output publish --no-build
 
-      # 6️⃣ Zip
-      - name: Zip Publish
+      # 6️⃣ Zip publish folder
+      - name: Zip Publish Folder
         run: zip -r publish.zip ./publish
 
-      # 7️⃣ Copy to VPS
+      # 7️⃣ Copy to VPS via SCP
       - name: Copy to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -47,7 +47,7 @@ jobs:
           insecure: true
           debug: true
 
-      # 8️⃣ Deploy on VPS
+      # 8️⃣ Deploy on VPS via SSH
       - name: Deploy on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -58,45 +58,58 @@ jobs:
           insecure: true
           script: |
             powershell -Command "
-              Write-Host 'Starting deployment...'
+              Write-Host '===== START DEPLOYMENT ====='
 
-              # Ensure folders exist
-              if (!(Test-Path 'C:\mind-earth')) { New-Item -ItemType Directory -Path 'C:\mind-earth' }
-              if (!(Test-Path 'C:\mind-earth\deploy')) { New-Item -ItemType Directory -Path 'C:\mind-earth\deploy' }
+              # Ensure base folder exists
+              if (!(Test-Path 'C:\mind-earth')) {
+                New-Item -ItemType Directory -Path 'C:\mind-earth'
+              }
 
-              # Check zip exists
+              # Clean deploy folder completely
+              if (Test-Path 'C:\mind-earth\deploy') {
+                Remove-Item -Recurse -Force 'C:\mind-earth\deploy'
+              }
+              New-Item -ItemType Directory -Path 'C:\mind-earth\deploy'
+
+              # Verify ZIP exists
               if (!(Test-Path 'C:\mind-earth\publish.zip')) {
-                Write-Host 'ZIP NOT FOUND!'
+                Write-Host 'ERROR: publish.zip NOT FOUND'
                 exit 1
               }
 
-              Write-Host 'Extracting zip...'
+              Write-Host 'ZIP SIZE:'
+              (Get-Item 'C:\mind-earth\publish.zip').Length
 
-              # Clean deploy folder
-              Remove-Item -Recurse -Force C:\mind-earth\deploy\* -ErrorAction SilentlyContinue
+              Write-Host 'Extracting ZIP using .NET...'
+
+              # Load .NET compression
+              Add-Type -AssemblyName System.IO.Compression.FileSystem
 
               # Extract
-              Expand-Archive -Path 'C:\mind-earth\publish.zip' -DestinationPath 'C:\mind-earth\deploy' -Force
+              [System.IO.Compression.ZipFile]::ExtractToDirectory(
+                'C:\mind-earth\publish.zip',
+                'C:\mind-earth\deploy'
+              )
 
               Write-Host 'Files after extraction:'
-              Get-ChildItem C:\mind-earth\deploy
+              Get-ChildItem 'C:\mind-earth\deploy'
 
               Import-Module WebAdministration
 
               Write-Host 'Stopping IIS site...'
               Stop-WebSite -Name 'admin-api.mindearthconsultancy.com'
 
-              Write-Host 'Copying files...'
+              Write-Host 'Copying files to IIS folder...'
 
-              # Handle both cases (with or without publish folder)
+              # Handle both zip structures
               if (Test-Path 'C:\mind-earth\deploy\publish') {
-                robocopy C:\mind-earth\deploy\publish C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
+                robocopy 'C:\mind-earth\deploy\publish' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR
               } else {
-                robocopy C:\mind-earth\deploy C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
+                robocopy 'C:\mind-earth\deploy' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR
               }
 
               Write-Host 'Starting IIS site...'
               Start-WebSite -Name 'admin-api.mindearthconsultancy.com'
 
-              Write-Host 'Deployment completed'
+              Write-Host '===== DEPLOYMENT COMPLETED ====='
             "
