@@ -36,7 +36,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           source: "publish.zip"
-          target: "C:/temp"
+          target: "C:/mind-earth"
 
       # Deploy on VPS
       - name: Deploy on VPS
@@ -47,9 +47,9 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
             powershell -Command "
-              Expand-Archive -Path C:\temp\publish.zip -DestinationPath C:\temp\deploy -Force;
+              Expand-Archive -Path C:\mind-earth\publish.zip -DestinationPath C:\mind-earth\deploy -Force;
               Import-Module WebAdministration;
               Stop-WebSite -Name 'MindEarth';
-              robocopy C:\temp\deploy C:\inetpub\wwwroot\MindEarth /MIR;
+              robocopy C:\temp\deploy C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR;
               Start-WebSite -Name 'MindEarth';
             "
