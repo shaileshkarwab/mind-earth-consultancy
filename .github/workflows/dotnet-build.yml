@@ -49,7 +49,7 @@ jobs:
             powershell -Command "
               Expand-Archive -Path C:\mind-earth\publish.zip -DestinationPath C:\mind-earth\deploy -Force;
               Import-Module WebAdministration;
-              Stop-WebSite -Name 'MindEarth';
-              robocopy C:\temp\deploy C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR;
-              Start-WebSite -Name 'MindEarth';
+              Stop-WebSite -Name 'admin-api.mindearthconsultancy.com';
+              robocopy C:\mind-earth\deploy C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR;
+              Start-WebSite -Name 'admin-api.mindearthconsultancy.com';
             "
