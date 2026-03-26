@@ -42,7 +42,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           source: "publish.zip"
-          target: "/c/temp"
+          target: "/c/mind-earth"
           port: 22
           insecure: true
 
@@ -58,10 +58,10 @@ jobs:
           script: |
             powershell -Command "
               # Ensure temp folder exists
-              if (!(Test-Path 'C:\temp')) { New-Item -ItemType Directory -Path 'C:\temp' }
+              if (!(Test-Path 'C:\mind-earth')) { New-Item -ItemType Directory -Path 'C:\mind-earth' }
 
               # Extract files
-              Expand-Archive -Path C:\temp\publish.zip -DestinationPath C:\temp\deploy -Force
+              Expand-Archive -Path C:\mind-earth\publish.zip -DestinationPath C:\mind-earth\deploy -Force
 
               Import-Module WebAdministration
 
@@ -69,7 +69,7 @@ jobs:
               Stop-WebSite -Name 'admin-api.mindearthconsultancy.com'
 
               # Copy files to IIS folder
-              robocopy C:\temp\deploy\publish C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
+              robocopy C:\mind-earth\deploy\publish C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com /MIR
 
               # Start IIS site
               Start-WebSite -Name 'admin-api.mindearthconsultancy.com'
