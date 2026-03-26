@@ -73,7 +73,8 @@ jobs:
             Write-Output 'Stopping IIS...';
             Stop-WebSite -Name 'admin-api.mindearthconsultancy.com';
             Write-Output 'Copying files...';
-            robocopy 'C:\mind-earth\deploy' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR; if ($LASTEXITCODE -lt 8) { exit 0 } else { exit $LASTEXITCODE }
+            robocopy 'C:\mind-earth\deploy' 'C:\Inetpub\vhosts\mindearthconsultancy.com\admin-api.mindearthconsultancy.com' /MIR;
+            if ($LASTEXITCODE -lt 8) { exit 0 } else { exit $LASTEXITCODE };
             Write-Output 'Starting IIS...';
             Start-WebSite -Name 'admin-api.mindearthconsultancy.com';
             Write-Output '===== DEPLOYMENT COMPLETED =====';
